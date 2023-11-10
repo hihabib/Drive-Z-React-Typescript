@@ -4,7 +4,7 @@ import classes from './Layout.module.css'
 import {IoSettingsOutline} from "react-icons/io5";
 import {BiUserCircle} from "react-icons/bi";
 import {Outlet} from "react-router-dom";
-import Sidebar from "../components/Sidebar.tsx";
+import Sidebar from "./Sidebar.tsx";
 
 const Layout = () => {
     return (<>
