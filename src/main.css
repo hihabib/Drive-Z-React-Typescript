@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'product-sans';
+    src: url('./assets/fonts/productsans-regular-webfont.eot');
+    src: url('./assets/fonts/productsans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('./assets/fonts/productsans-regular-webfont.woff2') format('woff2'),
+    url('./assets/fonts/productsans-regular-webfont.woff') format('woff'),
+    url('./assets/fonts/productsans-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'product-sans', serif;
+    color: rgb(68, 71, 70)
+}
