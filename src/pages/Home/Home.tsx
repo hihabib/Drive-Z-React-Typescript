@@ -1,15 +1,56 @@
 import Directory from "../../components/Directory/Directory.tsx";
 import PageTitle from "../../components/PageTitle/PageTitle.tsx";
-import {Stack} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 
 const Home = () => {
     return (
         <div>
             <PageTitle>My Drive</PageTitle>
-            <div className={'d-flex '}>
-                <Directory dirName={'Hello world'}/>
+            <Row lg={4} md={3} sm={2} xs={1} className={'g-3'}>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
+                <Col>
+                    <Directory dirName={'Hello world'}/>
+                </Col>
 
-            </div>
+            </Row>
         </div>
     );
 };

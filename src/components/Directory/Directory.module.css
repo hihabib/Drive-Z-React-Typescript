@@ -4,7 +4,7 @@
     padding: 10px 15px;
     cursor: pointer;
     user-select: none;
-    width: 230px;
+    width: 100%;
 }
 .directory:hover {
     background-color: rgb(220, 227, 237);
