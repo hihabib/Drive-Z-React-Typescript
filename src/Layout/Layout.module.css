@@ -16,4 +16,7 @@
 .headerRight {
     width: 80%
 }
-
+.mainContent {
+    background-color: #fff;
+    width: 80%;
+}

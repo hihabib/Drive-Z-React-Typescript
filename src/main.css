@@ -12,5 +12,6 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'product-sans', serif;
-    color: rgb(68, 71, 70)
+    color: rgb(68, 71, 70);
+    background-color: #f7f9fc!important;
 }
