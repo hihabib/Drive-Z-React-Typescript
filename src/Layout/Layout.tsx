@@ -31,11 +31,11 @@ const Layout = () => {
                 </div>
             </div>
         </header>
-        <main className={`d-flex gap-4 px-3 mt-2`}>
+        <main className={`d-flex gap-4 px-3 my-2 h-100`}>
             <aside className={`${classes.sidebar}`}>
                 <Sidebar/>
             </aside>
-            <div className={`${classes.mainContent} p-4 rounded-4`}>
+            <div className={`${classes.mainContent}  shadow-sm p-4 rounded-4`}>
                 <Outlet/>
             </div>
         </main>

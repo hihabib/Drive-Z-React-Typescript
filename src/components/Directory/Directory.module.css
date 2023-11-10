@@ -1,0 +1,23 @@
+.directory {
+    font-size: 28px;
+    background-color: rgb(242, 246, 252);
+    padding: 10px 15px;
+    cursor: pointer;
+    user-select: none;
+    width: 230px;
+}
+.directory:hover {
+    background-color: rgb(220, 227, 237);
+}
+.directoryName{
+    font-size: 14px;
+    font-weight: 500;
+}
+.moreIcon {
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+}
+.moreIcon:hover {
+    background-color: rgb(205, 212, 226);
+}
