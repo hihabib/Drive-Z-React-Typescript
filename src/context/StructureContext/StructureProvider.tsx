@@ -1,5 +1,5 @@
 import {ReactNode, useReducer} from "react";
-import {IStructureState, structureReducer} from "../../reducers/structureReducer.ts";
+import {initialStructure, structureReducer} from "../../reducers/structureReducer.ts";
 import {StructureContext} from "./StructureContext.ts";
 
 
@@ -8,10 +8,7 @@ interface StructureProviderProps {
 }
 
 const StructureProvider = ({children}: StructureProviderProps) => {
-    const [structures, dispatch] = useReducer(structureReducer,
-        {
-            folders: []
-        } as IStructureState)
+    const [structures, dispatch] = useReducer(structureReducer, initialStructure)
 
     return (<StructureContext.Provider value={{structures, dispatch}}>
         {children}

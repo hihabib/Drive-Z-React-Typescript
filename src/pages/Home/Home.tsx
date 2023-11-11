@@ -7,17 +7,20 @@ import ShowFolders from "../../components/ShowFolders/ShowFoldersProps.tsx";
 import ShowFiles from "../../components/ShowFiles/ShowFiles.tsx";
 
 const Home = () => {
-    const {structures: {folders}, dispatch} = useStructure();
+    const {structures: {folders, files}, dispatch} = useStructure();
     useEffect(() => {
         (async () => {
             const {data: folders} = await axios.get("http://localhost:8080/api/v1/tree/folders-tree/habibulislam");
             dispatch({type: StructureActionType.setFolders, payload: folders})
+
+            const {data: files} = await axios.get("http://localhost:8080/api/v1/tree/files-tree/habibulislam");
+            dispatch({type: StructureActionType.setFiles, payload: files})
         })()
     }, []);
     return (<div>
         <PageTitle>My Drive</PageTitle>
         <ShowFolders folders={folders}/>
-        <ShowFiles/>
+        <ShowFiles files={files}/>
     </div>);
 };
 
