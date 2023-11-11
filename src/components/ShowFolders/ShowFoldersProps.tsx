@@ -1,0 +1,22 @@
+import SectionTitle from "../SectionTitle/SectionTitle.tsx";
+import {Col, Row} from "react-bootstrap";
+import Directory from "../Directory/Directory.tsx";
+import {v4 as uuidV4} from "uuid";
+
+interface ShowFoldersProps {
+    folders: string[] | []
+}
+
+const ShowFolders = ({folders}: ShowFoldersProps) => {
+    return (<>
+            <SectionTitle title={"Folders"}/>
+            <Row lg={4} md={3} sm={2} xs={1} className={'g-3'}>
+                {folders && folders.map((folder, index) => (<Col key={`${index}-${folder}`}>
+                    <Directory id={uuidV4()} dirName={folder}/>
+                </Col>))}
+            </Row>
+    </>)
+
+};
+
+export default ShowFolders;

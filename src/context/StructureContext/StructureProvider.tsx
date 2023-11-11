@@ -8,7 +8,10 @@ interface StructureProviderProps {
 }
 
 const StructureProvider = ({children}: StructureProviderProps) => {
-    const [structures, dispatch] = useReducer(structureReducer, {} as IStructureState)
+    const [structures, dispatch] = useReducer(structureReducer,
+        {
+            folders: []
+        } as IStructureState)
 
     return (<StructureContext.Provider value={{structures, dispatch}}>
         {children}
