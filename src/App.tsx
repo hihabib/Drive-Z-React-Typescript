@@ -1,11 +1,13 @@
 import {RouterProvider} from "react-router-dom";
 import router from "./routes/routes.tsx";
-
+import StructureProvider from "./context/StructureContext/StructureProvider.tsx";
 const App = () => {
     return (
-       <div className={'drive-z'}>
-           <RouterProvider router={router}/>
-       </div>
+        <StructureProvider>
+           <div className={'drive-z'}>
+               <RouterProvider router={router}/>
+           </div>
+        </StructureProvider>
     );
 };
 

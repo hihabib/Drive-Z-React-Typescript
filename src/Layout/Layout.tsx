@@ -1,5 +1,5 @@
 import {FloatingLabel, Form, FormControl} from "react-bootstrap";
-import logo from '../assets/images/drive.png'
+import logo from '../assets/images/logo.png'
 import classes from './Layout.module.css'
 import {IoSettingsOutline} from "react-icons/io5";
 import {BiUserCircle} from "react-icons/bi";
