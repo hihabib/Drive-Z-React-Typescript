@@ -1,6 +1,6 @@
 import {IUser} from "../context/UserContext/AuthContext.ts";
 
-enum UserAction {
+export enum UserAction {
     set = "SET"
 }
 export interface IUserAction {

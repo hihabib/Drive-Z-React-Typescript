@@ -1,3 +1,6 @@
+.dots {
+    width: 20px;
+}
 .directory {
     font-size: 28px;
     background-color: rgb(242, 246, 252);
@@ -12,6 +15,9 @@
 .directoryName{
     font-size: 14px;
     font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .moreIcon {
     font-size: 20px;
@@ -20,4 +26,7 @@
 }
 .moreIcon:hover {
     background-color: rgb(205, 212, 226);
+}
+.folderNameWithIcon {
+    width: calc(100% - 47px);
 }

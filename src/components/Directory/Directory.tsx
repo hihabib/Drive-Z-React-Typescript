@@ -14,13 +14,15 @@ const Directory = ({dirName, id}: DirectoryProps) => {
     return (<>
         <div onContextMenu={displayContextMenu}
              className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
-            <div className={`d-inline-flex gap-3 rounded-4 align-items-center`}>
+            <div className={`d-inline-flex gap-3 rounded-4 align-items-center ${classes.folderNameWithIcon}`}>
                 <div className={`d-flex align-items-center`}><BiSolidFolder/></div>
                 <div className={`${classes.directoryName}`}>{dirName}</div>
             </div>
             <div onClick={displayContextMenu}
                  className={`d-flex justify-content-center align-items-center rounded-circle ${classes.moreIcon}`}>
-                <BiDotsVerticalRounded/>
+                <div className={classes.dots}>
+                    <BiDotsVerticalRounded/>
+                </div>
             </div>
         </div>
         <ContextMenu isDir={true} dirName={dirName} id={id}/>
