@@ -7,6 +7,7 @@ import ShowFolders from "../../components/ShowFolders/ShowFoldersProps.tsx";
 import ShowFiles from "../../components/ShowFiles/ShowFiles.tsx";
 
 const Home = () => {
+
     const {structures: {folders, files}, dispatch} = useStructure();
     useEffect(() => {
         (async () => {
