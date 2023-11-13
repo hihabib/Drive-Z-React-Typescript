@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router-dom";
 import Layout from "../Layout/Layout.tsx";
-import Home from "../pages/Home/Home.tsx";
+import Structure from "../pages/Structure/Structure.tsx";
 import PrivateRoute from "./PrivateRoute.tsx";
 import Login from "../pages/Login/Login.tsx";
 
@@ -15,7 +15,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path:'/',
-                element: <Home/>
+                element: <Structure/>
+            },
+            {
+                path: '*',
+                element: <Structure/>
             }
         ]
     }

@@ -1,6 +1,6 @@
 import {Button, Container, FloatingLabel, Form, FormControl, FormGroup} from "react-bootstrap";
 import classes from "./Login.module.css";
-import useAuth from "../../hooks/useAuth.ts";
+import useAuthContext from "../../hooks/useAuthContext.ts";
 import {isEmptyObj} from "../../utils/objectUtil.ts";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {UserAction} from "../../reducers/userReducer.ts";
 import {Auth} from "../../model.ts";
 const Login = () => {
-    const {user, dispatch} = useAuth()
+    const {user, dispatch} = useAuthContext()
     const navigate = useNavigate();
     const {getFieldProps, handleSubmit} = useFormik({
         initialValues: {

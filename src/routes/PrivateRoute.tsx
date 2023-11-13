@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import {isEmptyObj} from "../utils/objectUtil.ts";
-import useAuth from "../hooks/useAuth.ts";
+import useAuthContext from "../hooks/useAuthContext.ts";
 import {Navigate} from "react-router-dom";
 import {Auth} from "../model.ts";
 import axios from "axios";
@@ -11,7 +11,7 @@ interface PrivateRouteProps {
     children: ReactNode
 }
 const PrivateRoute = ({children} : PrivateRouteProps) => {
-    const {user, dispatch} = useAuth();
+    const {user, dispatch} = useAuthContext();
 
     if(isEmptyObj(user)){
         const token = localStorage.getItem(Auth.TOKEN);

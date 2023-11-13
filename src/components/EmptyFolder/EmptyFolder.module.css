@@ -1,0 +1,19 @@
+.emptyBox {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F5F5F5;
+    color: #333333;
+    margin: 50px auto;
+    border-radius: 50%;
+    flex-direction: column;
+    gap: 15px
+}
+.icon {
+    font-size: 100px;
+}
+.text {
+    font-size: 20px;
+}
