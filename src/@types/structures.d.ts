@@ -1,3 +1,4 @@
+
 export interface SelectedItems{
-    selectedIds: string[]
+    selectedIds: SelectedIds
 }

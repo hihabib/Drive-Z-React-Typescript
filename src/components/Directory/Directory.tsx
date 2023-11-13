@@ -7,16 +7,16 @@ import useDriveContextMenu from "../../hooks/useDriveContextMenu.ts";
 interface DirectoryProps {
     dirName: string,
     id: string,
-    addSelectedItem: (id:string) => void
-    isSelected: (id:string) => boolean
+    toggleSelectedItem: (id: string) => void
+    isSelected: (id: string) => boolean
 }
 
-const Directory = ({dirName, id, addSelectedItem, isSelected}: DirectoryProps) => {
+const Directory = ({dirName, id, toggleSelectedItem, isSelected}: DirectoryProps) => {
     const {displayContextMenu} = useDriveContextMenu(id);
     return (<>
         <div
             style={{backgroundColor: isSelected(id) ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
-            onClick={() => addSelectedItem(id)}
+            onClick={() => toggleSelectedItem(id)}
             // onDoubleClick={openFolder}
             onContextMenu={displayContextMenu}
             className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
