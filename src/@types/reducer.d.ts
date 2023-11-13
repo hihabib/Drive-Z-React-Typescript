@@ -1,15 +1,15 @@
 import {IUser} from "../context/UserContext/AuthContext.ts";
-import {FilesAndFolder} from "./api";
+import {StructureItems} from "./api";
 
 
 export interface IStructureState {
-    folders: FilesAndFolder[],
-    files: FilesAndFolder[]
+    folders: StructureItems[],
+    files: StructureItems[]
 }
 
 export interface StructureAction {
     type: StructureActionType,
-    payload: string | FilesAndFolder[] | ({ type: string[], values: string[] })[]
+    payload: string | StructureItems[] | ({ type: string[], values: string[] })[]
 }
 
 export interface IUserAction {

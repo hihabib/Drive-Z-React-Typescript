@@ -1,4 +1,4 @@
-export interface FilesAndFolder {
+export interface StructureItems {
     id: string
     name: string
 }

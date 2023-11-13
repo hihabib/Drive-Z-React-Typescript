@@ -4,10 +4,30 @@ import {useEffect, useState} from "react";
 import {isEmptyObj} from "../utils/objectUtil.ts";
 import useStructureContext from "./useStructureContext.ts";
 import axios, {AxiosResponse, isAxiosError} from "axios";
-import {FilesAndFolder} from "../@types/api";
+import {StructureItems} from "../@types/api";
 import {StructureActionType} from "../constants/structure.ts";
+import {SelectedItems} from "../@types/structures";
 
 const useStructure = () => {
+    const [selectedItems, setSelectedItems] = useState({
+        selectedIds: []
+    } as SelectedItems)
+
+    const isSelected = (id:string):boolean => {
+        return selectedItems.selectedIds.includes(id);
+    }
+    const toggleSelectedItem =(id:string):void => {
+        setSelectedItems(prevSelectedItems => {
+            const selectedIds = prevSelectedItems.selectedIds;
+            if(!selectedIds.includes(id)){
+                selectedIds.push(id)
+            } else {
+                const findSelectedItemIdsIndex = selectedIds.findIndex((selectedId) => selectedId === id)
+                selectedIds.splice(findSelectedItemIdsIndex, 1)
+            }
+            return {selectedIds: Array.from(new Set(selectedIds))}
+        })
+    }
     const path = useParams();
     const token = localStorage.getItem(Auth.TOKEN) as string;
     const [isEmpty, setIsEmpty] = useState({files: false, folders: false});
@@ -20,7 +40,7 @@ const useStructure = () => {
         }
         (async () => {
             try {
-                const folderRequest: AxiosResponse<FilesAndFolder[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-folders/${nestedPath}`, {
+                const folderRequest: AxiosResponse<StructureItems[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-folders/${nestedPath}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -44,7 +64,7 @@ const useStructure = () => {
             }
 
             try {
-                const fileRequest: AxiosResponse<FilesAndFolder[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-files/${nestedPath}`, {
+                const fileRequest: AxiosResponse<StructureItems[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-files/${nestedPath}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -65,6 +85,6 @@ const useStructure = () => {
         })()
     }, [dispatch, token, path]);
 
-    return {isEmpty, files, folders, isDirNotFound}
+    return {isEmpty, files, folders, isDirNotFound, addSelectedItem: toggleSelectedItem, isSelected}
 }
 export default useStructure

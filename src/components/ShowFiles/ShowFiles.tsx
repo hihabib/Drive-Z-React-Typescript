@@ -1,22 +1,23 @@
 import SectionTitle from "../SectionTitle/SectionTitle.tsx";
 import {Col, Row} from "react-bootstrap";
-import {v4 as uuidV4} from "uuid";
 import File from "../File/File.tsx";
-import {FilesAndFolder} from "../../@types/api";
+import {StructureItems} from "../../@types/api";
 
 interface ShowFilesProps {
-    files: FilesAndFolder[],
-    isEmpty: boolean
+    files: StructureItems[],
+    isEmpty: boolean,
+    addSelectedItem: (id:string) => void
+    isSelected: (id:string) => boolean
 }
 
-const ShowFiles = ({files, isEmpty}: ShowFilesProps) => {
+const ShowFiles = ({files, isEmpty, addSelectedItem, isSelected}: ShowFilesProps) => {
     return (<>
 
         {!isEmpty && (<>
                 <SectionTitle title={"Files"}/>
                 <Row lg={4} md={3} sm={2} xs={1} className={'g-3'}>
                     {files && files.map((file) => (<Col key={file.id}>
-                        <File id={uuidV4()} fileName={file.name}/>
+                        <File isSelected={isSelected} addSelectedItem={addSelectedItem} id={file.id} fileName={file.name}/>
                     </Col>))}
                 </Row>
             </>

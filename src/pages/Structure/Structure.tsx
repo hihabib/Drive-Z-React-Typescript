@@ -6,15 +6,16 @@ import useStructure from "../../hooks/useStructure.ts";
 
 const Structure = () => {
 
-    const {isEmpty, isDirNotFound, files, folders} = useStructure();
+    const {isEmpty, isDirNotFound, files, folders, addSelectedItem, isSelected} = useStructure();
+
     return (<div>
         {isDirNotFound ? "Page Not Found" : (
             <>
 
         <PageTitle>My Drive</PageTitle>
                 {isEmpty.files && isEmpty.folders ? <EmptyFolder/> : (<>
-                    <ShowDirectories isEmpty={isEmpty.folders} folders={folders}/>
-                    <ShowFiles isEmpty={isEmpty.files} files={files}/>
+                    <ShowDirectories isSelected={isSelected} addSelectedItem={addSelectedItem} isEmpty={isEmpty.folders} folders={folders}/>
+                    <ShowFiles isSelected={isSelected} addSelectedItem={addSelectedItem} isEmpty={isEmpty.files} files={files}/>
                 </>)}
             </>
         )}

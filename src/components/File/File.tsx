@@ -6,14 +6,16 @@ import {BiDotsVerticalRounded, BiSolidFile} from "react-icons/bi";
 import {getExtension} from "../../utils/stringUtil.ts";
 interface FileProps {
     id: string
-    fileName: string
+    fileName: string,
+    addSelectedItem: (id: string) => void
+    isSelected: (id: string) => boolean
 }
-const File = ({id, fileName}: FileProps) => {
+const File = ({id, fileName, addSelectedItem, isSelected}: FileProps) => {
     const extension = getExtension(fileName)
     const {displayContextMenu} = useDriveContextMenu(id);
     return (
-        <div onContextMenu={displayContextMenu}>
-            <div className={classes.frame}>
+        <div onClick={() => addSelectedItem(id)} onContextMenu={displayContextMenu}>
+            <div style={{backgroundColor: isSelected(id) ? 'rgb(194, 231, 255)':'rgb(242, 246, 252)'}} className={classes.frame}>
                 <Stack direction={'horizontal'} className={'justify-content-between align-items-center'}>
                     <div className={`d-flex gap-3 align-items-center ${classes.fileNameWithIcon}`}>
                         <BiSolidFile/>

@@ -3,27 +3,21 @@ import classes from "./Directory.module.css";
 import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../ContextMenu/ContextMenu.tsx";
 import useDriveContextMenu from "../../hooks/useDriveContextMenu.ts";
-import {useState} from "react";
 
 interface DirectoryProps {
     dirName: string,
-    id: string
+    id: string,
+    addSelectedItem: (id:string) => void
+    isSelected: (id:string) => boolean
 }
 
-const Directory = ({dirName, id}: DirectoryProps) => {
+const Directory = ({dirName, id, addSelectedItem, isSelected}: DirectoryProps) => {
     const {displayContextMenu} = useDriveContextMenu(id);
-    const [isSelected, setIsSelected] = useState(false)
-    const enterFolder = () => {
-        console.log("Entered")
-    }
-    const selectFolder = () => {
-        setIsSelected(true)
-    }
     return (<>
         <div
-            style={{backgroundColor: isSelected ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
-            onClick={selectFolder}
-            onDoubleClick={enterFolder}
+            style={{backgroundColor: isSelected(id) ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
+            onClick={() => addSelectedItem(id)}
+            // onDoubleClick={openFolder}
             onContextMenu={displayContextMenu}
             className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
 
