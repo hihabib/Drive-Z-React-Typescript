@@ -7,8 +7,9 @@ import {useFormik} from "formik";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {UserAction} from "../../reducers/userReducer.ts";
 import {Auth} from "../../model.ts";
+import {UserAction} from "../../constants/user.ts";
+
 const Login = () => {
     const {user, dispatch} = useAuthContext()
     const navigate = useNavigate();

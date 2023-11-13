@@ -2,9 +2,10 @@ import {useParams} from "react-router-dom";
 import {Auth} from "../model.ts";
 import {useEffect, useState} from "react";
 import {isEmptyObj} from "../utils/objectUtil.ts";
-import {StructureActionType} from "../reducers/structureReducer.ts";
 import useStructureContext from "./useStructureContext.ts";
 import axios, {AxiosResponse, isAxiosError} from "axios";
+import {FilesAndFolder} from "../@types/api";
+import {StructureActionType} from "../constants/structure.ts";
 
 const useStructure = () => {
     const path = useParams();
@@ -19,7 +20,7 @@ const useStructure = () => {
         }
         (async () => {
             try {
-                const folderRequest:AxiosResponse<string[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-folders/${nestedPath}`, {
+                const folderRequest: AxiosResponse<FilesAndFolder[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-folders/${nestedPath}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -43,7 +44,7 @@ const useStructure = () => {
             }
 
             try {
-                const fileRequest:AxiosResponse<string[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-files/${nestedPath}`, {
+                const fileRequest: AxiosResponse<FilesAndFolder[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-files/${nestedPath}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

@@ -1,6 +1,7 @@
-import {IUser, AuthContext} from "./AuthContext.ts";
+import { AuthContext} from "./AuthContext.ts";
 import {ReactNode, useReducer} from "react";
 import {userReducer} from "../../reducers/userReducer.ts";
+import {IUser} from "../../@types/authContext";
 
 interface AuthProviderProps {
     children: ReactNode

@@ -1,8 +1,5 @@
-import {IStructureState, StructureAction} from "../../reducers/structureReducer.ts";
-import {createContext, Dispatch} from "react";
+import {createContext} from "react";
+import {IStructureContext} from "../../@types/structureContext";
 
-interface IStructureContext {
-    structures: IStructureState;
-    dispatch: Dispatch<StructureAction>;
-}
+
 export const StructureContext = createContext({} as IStructureContext)

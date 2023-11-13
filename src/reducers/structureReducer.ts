@@ -1,17 +1,6 @@
-export enum StructureActionType {
-    setFolders = 'SET_FOLDERS',
-    setFiles = 'SET_FILES'
-}
-
-export interface StructureAction {
-    type: StructureActionType,
-    payload: string | string[] | ({ type: string[], values: string[] })[]
-}
-
-export interface IStructureState {
-    folders: string[],
-    files: string[]
-}
+import {IStructureState, StructureAction} from "../@types/reducer";
+import {isObject} from "../utils/objectUtil.ts";
+import {StructureActionType} from "../constants/structure.ts";
 
 export const initialStructure = {
     folders: [], files: []
@@ -23,7 +12,7 @@ export const structureReducer = (state: IStructureState, action: StructureAction
                 return state;
             }
             action.payload.forEach(element => {
-                if ('string' !== typeof element) {
+                if (!isObject(element)) {
                     return state;
                 }
             })
@@ -33,7 +22,7 @@ export const structureReducer = (state: IStructureState, action: StructureAction
                 return state;
             }
             action.payload.forEach(element => {
-                if ('string' !== typeof element) {
+                if (!isObject(element)) {
                     return state;
                 }
             })

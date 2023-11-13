@@ -2,9 +2,10 @@ import SectionTitle from "../SectionTitle/SectionTitle.tsx";
 import {Col, Row} from "react-bootstrap";
 import {v4 as uuidV4} from "uuid";
 import File from "../File/File.tsx";
+import {FilesAndFolder} from "../../@types/api";
 
 interface ShowFilesProps {
-    files: string[] | [],
+    files: FilesAndFolder[],
     isEmpty: boolean
 }
 
@@ -14,8 +15,8 @@ const ShowFiles = ({files, isEmpty}: ShowFilesProps) => {
         {!isEmpty && (<>
                 <SectionTitle title={"Files"}/>
                 <Row lg={4} md={3} sm={2} xs={1} className={'g-3'}>
-                    {files && files.map((file, index) => (<Col key={`${index}-${file}`}>
-                        <File id={uuidV4()} fileName={file}/>
+                    {files && files.map((file) => (<Col key={file.id}>
+                        <File id={uuidV4()} fileName={file.name}/>
                     </Col>))}
                 </Row>
             </>

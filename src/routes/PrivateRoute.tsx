@@ -4,8 +4,9 @@ import useAuthContext from "../hooks/useAuthContext.ts";
 import {Navigate} from "react-router-dom";
 import {Auth} from "../model.ts";
 import axios from "axios";
-import {IUser} from "../context/UserContext/AuthContext.ts";
-import {UserAction} from "../reducers/userReducer.ts";
+import {IUser} from "../@types/authContext";
+import {UserAction} from "../constants/user.ts";
+
 
 interface PrivateRouteProps {
     children: ReactNode

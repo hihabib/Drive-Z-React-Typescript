@@ -1,12 +1,8 @@
-import {IUser} from "../context/UserContext/AuthContext.ts";
+import {IUser} from "../@types/authContext";
+import {IUserAction} from "../@types/reducer";
+import {UserAction} from "../constants/user.ts";
 
-export enum UserAction {
-    set = "SET"
-}
-export interface IUserAction {
-    type: string,
-    payload: IUser
-}
+
 export const userReducer = (state:IUser, action:IUserAction) => {
     switch (action.type) {
         case UserAction.set:
