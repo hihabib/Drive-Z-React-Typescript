@@ -13,7 +13,7 @@ interface DirectoryProps {
 }
 
 const Directory = ({id, dirName}: DirectoryProps) => {
-    const {displayContextMenu} = useDriveContextMenu(id);
+    const {displayContextMenu, downloadFolder} = useDriveContextMenu(id, '', dirName);
     const directory = useRef<HTMLDivElement>();
     const {isSelected, selectedItemAction} = useSelection({
         type: 'directory', ref: directory, id,
@@ -44,7 +44,7 @@ const Directory = ({id, dirName}: DirectoryProps) => {
                 </div>
             </div>
         </div>
-        <ContextMenu isDir={true} dirName={dirName} id={id}/>
+        <ContextMenu downloadFunc={downloadFolder} isDir={true} dirName={dirName} id={id}/>
     </>)
 }
 
