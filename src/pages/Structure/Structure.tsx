@@ -6,7 +6,6 @@ import ShowFiles from "../../components/ShowFiles/ShowFiles.tsx";
 
 const Structure = () => {
     const {isEmpty, isDirNotFound, directories, files} = useStructure();
-
     return (<div>
         {isDirNotFound ? "Page Not Found" : (<>
                 <PageTitle>My Drive</PageTitle>

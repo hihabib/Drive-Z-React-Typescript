@@ -12,12 +12,15 @@ interface FileProps {
     fileName: string,
 }
 
+
 const File = ({id, fileName}: FileProps) => {
+
     const file = useRef<HTMLDivElement>();
     const {isSelected, selectedItemAction} = useSelection({type: 'file', id, ref: file});
     const extension = getExtension(fileName)
-    const {displayContextMenu} = useDriveContextMenu(id);
-    return (<div ref={file} onClick={() => selectedItemAction("ADD")} onContextMenu={displayContextMenu}>
+    const {displayContextMenu, downloadFile} = useDriveContextMenu(id, fileName);
+    return (<div onDoubleClick={downloadFile} ref={file} onClick={() => selectedItemAction("ADD")}
+                 onContextMenu={displayContextMenu}>
         <div style={{backgroundColor: isSelected() ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
              className={classes.frame}>
             <Stack direction={'horizontal'} className={'justify-content-between align-items-center'}>
@@ -34,7 +37,7 @@ const File = ({id, fileName}: FileProps) => {
                 <div>{extension} file</div>
             </div>
         </div>
-        <ContextMenu id={id} isDir={false}/>
+        <ContextMenu downloadFunc={downloadFile} id={id} isDir={false}/>
     </div>);
 };
 

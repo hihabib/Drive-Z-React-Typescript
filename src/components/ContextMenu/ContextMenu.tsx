@@ -15,17 +15,16 @@ import {
 } from "react-icons/bi";
 
 type ContextMenuProps = {
-    id: string, isDir: false,
-    dirName?: string
+    id: string, isDir: false, dirName?: string, downloadFunc: () => void
 } | {
     id: string, isDir: true
-    dirName: string
+    dirName: string, downloadFunc: () => void
 }
 
-const ContextMenu = ({id, isDir, dirName}: ContextMenuProps) => {
+const ContextMenu = ({id, isDir, dirName, downloadFunc}: ContextMenuProps) => {
     return (<>
         <Menu className={'contextMenu'} animation={false} id={id}>
-            <Item onClick={() => console.log("Working Context menu")}>
+            <Item onClick={() => downloadFunc()}>
                 <Stack direction={'horizontal'} gap={3}>
                     <div style={{fontSize: '20px'}}><BiDownload/></div>
                     <div>Download</div>
