@@ -1,11 +1,11 @@
-import {ReactNode, useCallback, useEffect, useMemo, useReducer} from "react";
+import {ReactNode, useEffect, useReducer} from "react";
 import {initialStructure, structureReducer} from "../../reducers/structureReducer.ts";
 import {StructureContext} from "./StructureContext.ts";
 import {StructureActionType} from "../../constants/structure.ts";
 import {Auth} from "../../model.ts";
 import axios, {AxiosResponse, isAxiosError} from "axios";
 import {StructureItems} from "../../@types/api";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 
 interface StructureProviderProps {
@@ -19,7 +19,6 @@ const StructureProvider = ({children}: StructureProviderProps) => {
     const [structures, dispatch] = useReducer(structureReducer, initialStructure)
 
     const path = useLocation().pathname;
-
     useEffect(() => {
 
         (async () => {
