@@ -3,15 +3,15 @@ import classes from "./Directory.module.css";
 import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../ContextMenu/ContextMenu.tsx";
 import useDriveContextMenu from "../../hooks/useDriveContextMenu.ts";
+import useStructure from "../../hooks/useStructure.ts";
 
 interface DirectoryProps {
-    dirName: string,
     id: string,
-    toggleSelectedItem: (id: string) => void
-    isSelected: (id: string) => boolean
+    dirName: string
 }
 
-const Directory = ({dirName, id, toggleSelectedItem, isSelected}: DirectoryProps) => {
+const Directory = ({id, dirName}: DirectoryProps) => {
+    const {isSelected, toggleSelectedItem} = useStructure();
     const {displayContextMenu} = useDriveContextMenu(id);
     return (<>
         <div
@@ -33,7 +33,7 @@ const Directory = ({dirName, id, toggleSelectedItem, isSelected}: DirectoryProps
             </div>
         </div>
         <ContextMenu isDir={true} dirName={dirName} id={id}/>
-    </>);
-};
+    </>)
+}
 
 export default Directory;

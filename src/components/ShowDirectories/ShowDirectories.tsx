@@ -1,23 +1,19 @@
 import SectionTitle from "../SectionTitle/SectionTitle.tsx";
 import {Col, Row} from "react-bootstrap";
 import Directory from "../Directory/Directory.tsx";
-import {StructureItems} from "../../@types/api";
+import useStructure from "../../hooks/useStructure.ts";
+import {memo} from "react";
 
-interface ShowDirectoryProps {
-    folders: StructureItems[],
-    isEmpty: boolean,
-    toggleSelectedItem: (id: string) => void
-    isSelected: (id: string) => boolean
-}
 
-const ShowDirectories = ({folders, isEmpty, toggleSelectedItem, isSelected}: ShowDirectoryProps) => {
+const ShowDirectories = () => {
+    const {isEmpty, folders} = useStructure();
+
     return (<>
-        {!isEmpty && (<>
+        {!isEmpty.folders && (<>
                 <SectionTitle title={"Folders"}/>
                 <Row lg={4} md={3} sm={2} xs={1} className={'g-3'}>
                     {folders && folders.map((folder) => (<Col key={folder.id}>
-                        <Directory isSelected={isSelected} toggleSelectedItem={toggleSelectedItem} id={folder.id}
-                                   dirName={folder.name}/>
+                        <Directory id={folder.id} dirName={folder.name}/>
                     </Col>))}
                 </Row>
             </>

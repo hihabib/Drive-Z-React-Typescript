@@ -4,15 +4,15 @@ import {CardHeader, Stack} from "react-bootstrap";
 import classes from "./File.module.css";
 import {BiDotsVerticalRounded, BiSolidFile} from "react-icons/bi";
 import {getExtension} from "../../utils/stringUtil.ts";
+import useStructure from "../../hooks/useStructure.ts";
 
 interface FileProps {
     id: string
     fileName: string,
-    toggleSelectedItem: (id: string) => void
-    isSelected: (id: string) => boolean
 }
 
-const File = ({id, fileName, toggleSelectedItem, isSelected}: FileProps) => {
+const File = ({id, fileName}: FileProps) => {
+    const {isSelected, toggleSelectedItem} = useStructure();
     const extension = getExtension(fileName)
     const {displayContextMenu} = useDriveContextMenu(id);
     return (<div onClick={() => toggleSelectedItem(id)} onContextMenu={displayContextMenu}>

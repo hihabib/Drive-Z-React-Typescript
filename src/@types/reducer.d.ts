@@ -11,16 +11,21 @@ export interface IStructureState {
     selectedIds: {
         ids: SelectedIds
     },
-    isEmpty: {files: boolean, folders: boolean}
+    isEmpty: {files: boolean, folders: boolean},
+    isDirNotFound: boolean
 }
 export type IEmptyItemsStatus = {
     files: boolean
 } | {
     folders: boolean
 }
+
+export interface isDirNotFound {
+    isDirNotFound: boolean
+}
 export interface StructureAction {
     type: StructureActionType,
-    payload: StructureItems[] | {ids: SelectedIds} | IEmptyItemsStatus
+    payload: StructureItems[] | {ids: SelectedIds} | IEmptyItemsStatus | isDirNotFound
 }
 
 export interface IUserAction {

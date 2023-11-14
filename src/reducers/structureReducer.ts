@@ -8,7 +8,8 @@ export const initialStructure = {
     selectedIds: {
         ids: {}
     },
-    isEmpty: {files: false, folders: false}
+    isEmpty: {files: false, folders: false},
+    isDirNotFound: false
 } as IStructureState
 export const structureReducer = (state: IStructureState, action: StructureAction) => {
     switch (action.type) {
@@ -53,6 +54,11 @@ export const structureReducer = (state: IStructureState, action: StructureAction
         case StructureActionType.setFolderEmptyStatus:
             if('folders' in action.payload){
                 return {...state, isEmpty: {...state.isEmpty, folders: action.payload.folders}}
+            }
+            return state;
+        case StructureActionType.dirNotFound:
+            if('isDirNotFound' in action.payload){
+                return {...state, isDirNotFound: action.payload.isDirNotFound}
             }
             return state;
         default:
