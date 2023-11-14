@@ -3,7 +3,8 @@ import classes from "./Directory.module.css";
 import "react-contexify/dist/ReactContexify.css";
 import ContextMenu from "../ContextMenu/ContextMenu.tsx";
 import useDriveContextMenu from "../../hooks/useDriveContextMenu.ts";
-import useStructure from "../../hooks/useStructure.ts";
+import {useRef} from "react";
+import useSelection from "../../hooks/useSelection.ts";
 
 interface DirectoryProps {
     id: string,
@@ -11,17 +12,22 @@ interface DirectoryProps {
 }
 
 const Directory = ({id, dirName}: DirectoryProps) => {
-    const {isSelected, toggleSelectedItem} = useStructure();
     const {displayContextMenu} = useDriveContextMenu(id);
-    return (<>
-        <div
-            style={{backgroundColor: isSelected(id) ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
-            onClick={() => toggleSelectedItem(id)}
-            // onDoubleClick={openFolder}
-            onContextMenu={displayContextMenu}
-            className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
+    const directory = useRef<HTMLDivElement>();
+    const {isSelected, selectedItemAction} = useSelection({
+        type: 'directory', ref: directory, id,
+    });
 
-            <div className={`d-inline-flex gap-3 rounded-4 align-items-center ${classes.folderNameWithIcon}`}>
+    console.log("Directory")
+    return (<>
+        <div ref={directory}
+             style={{backgroundColor: isSelected() ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
+             onClick={() => selectedItemAction("ADD")}
+            // onDoubleClick={openDirectory}
+             onContextMenu={displayContextMenu}
+             className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
+
+            <div className={`d-inline-flex gap-3 rounded-4 align-items-center ${classes.directoryNameWithIcon}`}>
                 <div className={`d-flex align-items-center`}><BiSolidFolder/></div>
                 <div className={`${classes.directoryName}`}>{dirName}</div>
             </div>

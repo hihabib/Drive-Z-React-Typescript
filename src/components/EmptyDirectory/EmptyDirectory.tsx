@@ -1,7 +1,7 @@
 import {BiBowlHot} from "react-icons/bi";
-import classes from "./EmptyFolder.module.css";
+import classes from "./EmptyDirectory.module.css";
 
-const EmptyFolder = () => {
+const EmptyDirectory = () => {
     return (
         <div  className={classes.emptyBox}>
 
@@ -13,4 +13,4 @@ const EmptyFolder = () => {
         </div>
     );
 };
-export default EmptyFolder;
+export default EmptyDirectory;

@@ -5,9 +5,10 @@ import {IoSettingsOutline} from "react-icons/io5";
 import {BiUserCircle} from "react-icons/bi";
 import {Outlet} from "react-router-dom";
 import Sidebar from "./Sidebar.tsx";
+import StructureProvider from "../context/StructureContext/StructureProvider.tsx";
 
 const Layout = () => {
-    return (<>
+    return (<StructureProvider>
         <header className={'d-flex align-items-center gap-4 px-3 pt-3'}>
             <div className={`d-flex align-items-center ${classes.headerLeft}`}>
                 <div className={`${classes.logo} d-flex align-items-center gap-2`}>
@@ -39,7 +40,7 @@ const Layout = () => {
                 <Outlet/>
             </div>
         </main>
-    </>);
+    </StructureProvider>);
 };
 
 export default Layout;

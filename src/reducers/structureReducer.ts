@@ -3,17 +3,14 @@ import {isObject} from "../utils/objectUtil.ts";
 import {StructureActionType} from "../constants/structure.ts";
 
 export const initialStructure = {
-    folders: [],
+    directories: [],
     files: [],
-    selectedIds: {
-        ids: {}
-    },
-    isEmpty: {files: false, folders: false},
+    isEmpty: {files: false, directories: false},
     isDirNotFound: false
 } as IStructureState
 export const structureReducer = (state: IStructureState, action: StructureAction) => {
     switch (action.type) {
-        case StructureActionType.setFolders:
+        case StructureActionType.setDirectories:
             if (!Array.isArray(action.payload)) {
                 return state;
             }
@@ -22,7 +19,7 @@ export const structureReducer = (state: IStructureState, action: StructureAction
                     return state;
                 }
             })
-            return {...state, folders: [...action.payload]} as IStructureState
+            return {...state, directories: [...action.payload]} as IStructureState
         case StructureActionType.setFiles:
             if (!Array.isArray(action.payload)) {
                 return state;
@@ -33,27 +30,14 @@ export const structureReducer = (state: IStructureState, action: StructureAction
                 }
             })
             return {...state, files: [...action.payload]} as IStructureState
-        case StructureActionType.setSelectionId:
-            if(!Array.isArray(action.payload) && 'ids' in action.payload){
-                return {
-                    ...state,
-                    selectedIds: {
-                            ids: {
-                                ...state.selectedIds.ids,
-                                ...action.payload.ids,
-                            }
-                    }
-                };
-            }
-            return state;
         case StructureActionType.setFileEmptyStatus:
             if('files' in action.payload ){
                 return {...state, isEmpty: {...state.isEmpty, files: action.payload.files}}
             }
             return state;
-        case StructureActionType.setFolderEmptyStatus:
-            if('folders' in action.payload){
-                return {...state, isEmpty: {...state.isEmpty, folders: action.payload.folders}}
+        case StructureActionType.setDirectoryEmptyStatus:
+            if('directories' in action.payload){
+                return {...state, isEmpty: {...state.isEmpty, directories: action.payload.directories}}
             }
             return state;
         case StructureActionType.dirNotFound:

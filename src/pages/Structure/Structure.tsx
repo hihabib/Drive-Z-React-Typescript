@@ -1,23 +1,20 @@
 import PageTitle from "../../components/PageTitle/PageTitle.tsx";
 import ShowDirectories from "../../components/ShowDirectories/ShowDirectories.tsx";
-import EmptyFolder from "../../components/EmptyFolder/EmptyFolder.tsx";
+import EmptyDirectory from "../../components/EmptyDirectory/EmptyDirectory.tsx";
 import useStructure from "../../hooks/useStructure.ts";
 import ShowFiles from "../../components/ShowFiles/ShowFiles.tsx";
 
 const Structure = () => {
-    const {isEmpty, isDirNotFound}= useStructure();
+    const {isEmpty, isDirNotFound, directories, files} = useStructure();
 
     return (<div>
-        {isDirNotFound ? "Page Not Found" : (
-            <>
-
-        <PageTitle>My Drive</PageTitle>
-                {isEmpty.files && isEmpty.folders ? <EmptyFolder/> : (<>
-                    <ShowDirectories/>
-                    <ShowFiles/>
+        {isDirNotFound ? "Page Not Found" : (<>
+                <PageTitle>My Drive</PageTitle>
+                {isEmpty.files && isEmpty.directories ? <EmptyDirectory/> : (<>
+                    <ShowDirectories directories={directories} isEmptyDirectory={isEmpty.directories}/>
+                    <ShowFiles files={files} isEmptyFile={isEmpty.files}/>
                 </>)}
-            </>
-        )}
+            </>)}
     </div>);
 };
 

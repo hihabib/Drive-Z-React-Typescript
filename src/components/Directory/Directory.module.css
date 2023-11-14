@@ -26,6 +26,6 @@
 .moreIcon:hover {
     background-color: rgb(205, 212, 226);
 }
-.folderNameWithIcon {
+.directoryNameWithIcon {
     width: calc(100% - 47px);
 }

@@ -2,22 +2,17 @@ import {IUser} from "../context/UserContext/AuthContext.ts";
 import {StructureItems} from "./api";
 import {StructureActionType} from "../constants/structure.ts";
 
-export interface SelectedIds {
-    [id:string] : boolean | undefined
-}
+
 export interface IStructureState {
-    folders: StructureItems[],
+    directories: StructureItems[],
     files: StructureItems[],
-    selectedIds: {
-        ids: SelectedIds
-    },
-    isEmpty: {files: boolean, folders: boolean},
+    isEmpty: {files: boolean, directories: boolean},
     isDirNotFound: boolean
 }
 export type IEmptyItemsStatus = {
     files: boolean
 } | {
-    folders: boolean
+    directories: boolean
 }
 
 export interface isDirNotFound {
@@ -25,7 +20,7 @@ export interface isDirNotFound {
 }
 export interface StructureAction {
     type: StructureActionType,
-    payload: StructureItems[] | {ids: SelectedIds} | IEmptyItemsStatus | isDirNotFound
+    payload: StructureItems[] | IEmptyItemsStatus | isDirNotFound
 }
 
 export interface IUserAction {
