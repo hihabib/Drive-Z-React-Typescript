@@ -14,14 +14,16 @@ import {
     BiUserPlus
 } from "react-icons/bi";
 
-type ContextMenuProps = {
-    id: string, isDir: false, dirName?: string, downloadFunc: () => void
+type ItemContextMenuProps = {
+    id: string, isDir: false, dirName?: string, downloadFunc: () => void,
+    renameFunc?: () => void
 } | {
     id: string, isDir: true
-    dirName: string, downloadFunc: () => void
+    dirName: string, downloadFunc: () => void,
+    renameFunc?: () => void
 }
 
-const ContextMenu = ({id, isDir, dirName, downloadFunc}: ContextMenuProps) => {
+const ItemContextMenu = ({id, isDir, dirName, downloadFunc, renameFunc}: ItemContextMenuProps) => {
     return (<>
         <Menu className={'contextMenu'} animation={false} id={id}>
             <Item onClick={() => downloadFunc()}>
@@ -30,7 +32,7 @@ const ContextMenu = ({id, isDir, dirName, downloadFunc}: ContextMenuProps) => {
                     <div>Download</div>
                 </Stack>
             </Item>
-            <Item onClick={() => console.log("Working Context menu")}>
+            <Item onClick={() => renameFunc ? renameFunc() : ''}>
                 <Stack direction={'horizontal'} gap={3}>
                     <div style={{fontSize: '20px'}}><BiPencil/></div>
                     <div>Rename</div>
@@ -112,4 +114,4 @@ const ContextMenu = ({id, isDir, dirName, downloadFunc}: ContextMenuProps) => {
     </>);
 };
 
-export default ContextMenu;
+export default ItemContextMenu;

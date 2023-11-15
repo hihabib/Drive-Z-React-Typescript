@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
 
-const useDriveContextMenu = (id: string, fileName:string = "", folderName:string ="") => {
+const useItemContextMenu = (id: string, fileName:string = "", folderName:string ="") => {
     const location = useLocation();
     const {show} = useContextMenu({
         id
@@ -53,4 +53,4 @@ const useDriveContextMenu = (id: string, fileName:string = "", folderName:string
    return {displayContextMenu, downloadFile, downloadFolder}
 };
 
-export default useDriveContextMenu;
+export default useItemContextMenu;

@@ -1,10 +1,10 @@
-import {MutableRefObject, useCallback, useEffect, useState} from "react";
+import {RefObject, useCallback, useEffect, useState} from "react";
 import {SelectedItems} from "../@types/selection";
 
 interface useSelectionParams {
     type: 'file' | 'directory',
     id: string,
-    ref: MutableRefObject<HTMLDivElement>
+    ref: RefObject<HTMLDivElement>
 }
 
 const useSelection = ({type, id, ref}: useSelectionParams) => {
@@ -35,8 +35,10 @@ const useSelection = ({type, id, ref}: useSelectionParams) => {
 
     useEffect(() => {
         const removeHandler = (e: Event) => {
-            if (!ref.current.contains(e.target) && isSelected()) {
-                selectedItemAction('REMOVE')
+            if (e.target instanceof Node) {
+                if (!ref.current?.contains(e.target) && isSelected()) {
+                    selectedItemAction('REMOVE')
+                }
             }
         }
         window.addEventListener('mousedown', removeHandler);

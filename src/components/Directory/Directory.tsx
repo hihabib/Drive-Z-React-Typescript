@@ -1,11 +1,8 @@
 import {BiDotsVerticalRounded, BiSolidFolder} from "react-icons/bi";
 import classes from "./Directory.module.css";
 import "react-contexify/dist/ReactContexify.css";
-import ContextMenu from "../ContextMenu/ContextMenu.tsx";
-import useDriveContextMenu from "../../hooks/useDriveContextMenu.ts";
-import {useRef} from "react";
-import useSelection from "../../hooks/useSelection.ts";
-import {useNavigate} from "react-router-dom";
+import ItemContextMenu from "../ContextMenu/ItemContextMenu.tsx";
+import useDirector from "../../hooks/useDirectory.ts";
 
 interface DirectoryProps {
     id: string,
@@ -13,29 +10,39 @@ interface DirectoryProps {
 }
 
 const Directory = ({id, dirName}: DirectoryProps) => {
-    const {displayContextMenu, downloadFolder} = useDriveContextMenu(id, '', dirName);
-    const directory = useRef<HTMLDivElement>();
-    const {isSelected, selectedItemAction} = useSelection({
-        type: 'directory', ref: directory, id,
-    });
-
-    const navigate = useNavigate();
-    const openDirectory = () => {
-        navigate(dirName, {relative: "path"});
-    }
-
-    console.log("Directory")
-    return (<>
+    const {
+        directory,
+        isSelected,
+        selectedItemAction,
+        openDirectory,
+        displayContextMenu,
+        isRenameActive,
+        handleSubmit,
+        getFieldProps,
+        renameRef,
+        downloadFolder,
+        currentItemName:currentDirName,
+        renameItem:renameDirectory
+    } = useDirector({
+        id, initialDirName: dirName
+    })
+    return <>
         <div ref={directory}
              style={{backgroundColor: isSelected() ? 'rgb(194, 231, 255)' : 'rgb(242, 246, 252)'}}
              onClick={() => selectedItemAction("ADD")}
              onDoubleClick={openDirectory}
              onContextMenu={displayContextMenu}
              className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}>
-
             <div className={`d-inline-flex gap-3 rounded-4 align-items-center ${classes.directoryNameWithIcon}`}>
                 <div className={`d-flex align-items-center`}><BiSolidFolder/></div>
-                <div className={`${classes.directoryName}`}>{dirName}</div>
+                {isRenameActive ? <>
+                    <form className={`${classes.directoryName}`} onSubmit={handleSubmit}>
+                        <input {...getFieldProps(id)} name={id} ref={renameRef} style={{maxWidth: "100%"}} id={id}
+                               type={'text'}></input>
+                    </form>
+                </> : <>
+                    <div className={`${classes.directoryName}`}>{currentDirName}</div>
+                </>}
             </div>
             <div onClick={displayContextMenu}
                  className={`d-flex justify-content-center align-items-center rounded-circle ${classes.moreIcon}`}>
@@ -44,8 +51,8 @@ const Directory = ({id, dirName}: DirectoryProps) => {
                 </div>
             </div>
         </div>
-        <ContextMenu downloadFunc={downloadFolder} isDir={true} dirName={dirName} id={id}/>
-    </>)
+        <ItemContextMenu renameFunc={renameDirectory} downloadFunc={downloadFolder} isDir={true} dirName={currentDirName}
+                         id={id}/>
+    </>
 }
-
 export default Directory;
