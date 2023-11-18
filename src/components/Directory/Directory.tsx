@@ -1,7 +1,7 @@
 import {BiDotsVerticalRounded, BiSolidFolder} from "react-icons/bi";
 import classes from "./Directory.module.css";
 import "react-contexify/dist/ReactContexify.css";
-import ItemContextMenu from "../ContextMenu/ItemContextMenu.tsx";
+import ItemContextMenu from "../ItemContextMenu/ItemContextMenu.tsx";
 import useDirector from "../../hooks/useDirectory.ts";
 
 interface DirectoryProps {

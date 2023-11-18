@@ -46,6 +46,7 @@ const useItemContextMenu = (id: string, fileName:string = "", folderName:string 
         }, 2000);
     }
     const displayContextMenu = (event: MouseEvent<HTMLElement>): void => {
+        event.stopPropagation();
         show({
             event
         })

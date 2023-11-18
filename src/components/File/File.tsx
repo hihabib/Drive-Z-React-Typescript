@@ -1,4 +1,4 @@
-import ItemContextMenu from "../ContextMenu/ItemContextMenu.tsx";
+import ItemContextMenu from "../ItemContextMenu/ItemContextMenu.tsx";
 import {CardHeader, Stack} from "react-bootstrap";
 import classes from "./File.module.css";
 import {BiDotsVerticalRounded, BiSolidFile} from "react-icons/bi";
