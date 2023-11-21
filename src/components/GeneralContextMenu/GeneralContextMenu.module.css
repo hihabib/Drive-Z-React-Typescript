@@ -1,0 +1,10 @@
+.modal >div {
+    max-width: 300px;
+}
+.button {
+    text-decoration: none!important;
+    color: #333333!important;
+}
+.button:hover {
+    background: #dedede !important;
+}

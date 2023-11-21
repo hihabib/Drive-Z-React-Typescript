@@ -1,29 +1,37 @@
-import {IUser} from "../context/UserContext/AuthContext.ts";
-import {StructureItems} from "./api";
-import {StructureActionType} from "../constants/structure.ts";
+import { IUser } from "../context/UserContext/AuthContext.ts";
+import { StructureDirectory, StructureFile, StructureItems } from "./api";
+import { StructureActionType } from "../constants/structure.ts";
 
-
-export interface IStructureState {
-    directories: StructureItems[],
-    files: StructureItems[],
-    isEmpty: {files: boolean, directories: boolean},
-    isDirNotFound: boolean
+export interface CurrentDirectoryId {
+    currentDirectoryId: string;
 }
-export type IEmptyItemsStatus = {
-    files: boolean
-} | {
-    directories: boolean
+export interface IStructureState extends CurrentDirectoryId {
+    directories: StructureDirectory[];
+    files: StructureFile[];
+    isEmpty: { files: boolean; directories: boolean };
+    isDirNotFound: boolean;
 }
+export type IEmptyItemsStatus =
+    | {
+          files: boolean;
+      }
+    | {
+          directories: boolean;
+      };
 
 export interface isDirNotFound {
-    isDirNotFound: boolean
+    isDirNotFound: boolean;
 }
 export interface StructureAction {
-    type: StructureActionType,
-    payload: StructureItems[] | IEmptyItemsStatus | isDirNotFound
+    type: StructureActionType;
+    payload:
+        | StructureItems[]
+        | IEmptyItemsStatus
+        | isDirNotFound
+        | CurrentDirectoryId;
 }
 
 export interface IUserAction {
-    type: string,
-    payload: IUser
+    type: string;
+    payload: IUser;
 }

@@ -1,73 +1,109 @@
-import {ReactNode, useEffect, useReducer} from "react";
-import {initialStructure, structureReducer} from "../../reducers/structureReducer.ts";
-import {StructureContext} from "./StructureContext.ts";
-import {StructureActionType} from "../../constants/structure.ts";
-import {Auth} from "../../model.ts";
-import axios, {AxiosResponse, isAxiosError} from "axios";
-import {StructureItems} from "../../@types/api";
-import {useLocation} from "react-router-dom";
-
+import { ReactNode, useEffect, useReducer } from "react";
+import {
+    initialStructure,
+    structureReducer,
+} from "../../reducers/structureReducer.ts";
+import { StructureContext } from "./StructureContext.ts";
+import { StructureActionType } from "../../constants/structure.ts";
+import { Auth } from "../../model.ts";
+import axios, { AxiosResponse, isAxiosError } from "axios";
+import { StructureDirectory, StructureFile } from "../../@types/api";
+import { useLocation } from "react-router-dom";
 
 interface StructureProviderProps {
-    children: ReactNode,
+    children: ReactNode;
 }
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
-
-const StructureProvider = ({children}: StructureProviderProps) => {
-    const [structures, dispatch] = useReducer(structureReducer, initialStructure)
+const StructureProvider = ({ children }: StructureProviderProps) => {
+    const [structures, dispatch] = useReducer(
+        structureReducer,
+        initialStructure,
+    );
 
     const path = useLocation().pathname;
+
     useEffect(() => {
+        (async () => {
+            try {
+                const directoryResponse: AxiosResponse<StructureDirectory[]> =
+                    await axios.get(
+                        `http://localhost:8080/api/v1/structures/get-directories${path}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        },
+                    );
+                const { data: directories } = directoryResponse;
+
+                if (0 === directories.length) {
+                    dispatch({
+                        type: StructureActionType.setDirectoryEmptyStatus,
+                        payload: { directories: true },
+                    });
+                } else {
+                    dispatch({
+                        type: StructureActionType.setDirectoryEmptyStatus,
+                        payload: { directories: false },
+                    });
+                }
+
+                dispatch({
+                    type: StructureActionType.setDirectories,
+                    payload: directories,
+                });
+            } catch (error) {
+                if (isAxiosError(error) && error?.response?.status) {
+                    dispatch({
+                        type: StructureActionType.dirNotFound,
+                        payload: { isDirNotFound: true },
+                    });
+                }
+            }
+        })();
 
         (async () => {
             try {
-                const directoryRequest: AxiosResponse<StructureItems[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-directories/${path}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const {data: directories} = directoryRequest;
+                const fileRequest: AxiosResponse<StructureFile[]> =
+                    await axios.get(
+                        `http://localhost:8080/api/v1/structures/get-files${path}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        },
+                    );
 
-
-                if (0 === directories.length) {
-                    dispatch({type: StructureActionType.setDirectoryEmptyStatus, payload: {directories: true}})
-                } else {
-                    dispatch({type: StructureActionType.setDirectoryEmptyStatus, payload: {directories: false}})
-                }
-
-                dispatch({type: StructureActionType.setDirectories, payload: directories})
-            } catch (error) {
-                if (isAxiosError(error) && error?.response?.status) {
-                    dispatch({type: StructureActionType.dirNotFound, payload: {isDirNotFound: true}})
-                }
-            }
-
-            try {
-                const fileRequest: AxiosResponse<StructureItems[]> = await axios.get(`http://localhost:8080/api/v1/structures/get-files/${path}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                const {data: files} = fileRequest;
+                const { data: files } = fileRequest;
                 if (0 === files.length) {
-                    dispatch({type: StructureActionType.setFileEmptyStatus, payload: {files: true}})
+                    dispatch({
+                        type: StructureActionType.setFileEmptyStatus,
+                        payload: { files: true },
+                    });
                 } else {
-                    dispatch({type: StructureActionType.setFileEmptyStatus, payload: {files: false}})
+                    dispatch({
+                        type: StructureActionType.setFileEmptyStatus,
+                        payload: { files: false },
+                    });
                 }
 
-                dispatch({type: StructureActionType.setFiles, payload: files})
+                dispatch({
+                    type: StructureActionType.setFiles,
+                    payload: files,
+                });
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-        })()
+        })();
     }, [path]);
 
-    return (<StructureContext.Provider value={{dispatch, ...structures}}>
-        {children}
-    </StructureContext.Provider>);
+    return (
+        <StructureContext.Provider value={{ dispatch, ...structures }}>
+            {children}
+        </StructureContext.Provider>
+    );
 };
 
 export default StructureProvider;
