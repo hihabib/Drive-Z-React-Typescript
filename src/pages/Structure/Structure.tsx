@@ -5,14 +5,10 @@ import useStructure from "../../hooks/useStructure.ts";
 import ShowFiles from "../../components/ShowFiles/ShowFiles.tsx";
 import GeneralContextMenu from "../../components/GeneralContextMenu/GeneralContextMenu.tsx";
 import { useContextMenu } from "react-contexify";
-import { MouseEvent, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { StructureActionType } from "../../constants/structure.ts";
+import { MouseEvent } from "react";
 
 const Structure = () => {
-    const location = useLocation();
-    const { isEmpty, isDirNotFound, directories, files, dispatch } =
-        useStructure();
+    const { isEmpty, isDirNotFound, directories, files } = useStructure();
 
     const { show } = useContextMenu({
         id: "GeneralContextMenu",
