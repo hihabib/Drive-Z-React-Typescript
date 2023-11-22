@@ -15,11 +15,7 @@ const useItemContextMenu = (
         id,
     });
     const downloadFile = async () => {
-        const downloadURL =
-            "http://localhost:8080/api/v1/download/file" +
-            location.pathname +
-            "/" +
-            fileName;
+        const downloadURL = "http://localhost:8080/api/v1/download/file/" + id;
         const { data: blobData } = await axios.get(downloadURL, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -37,7 +33,7 @@ const useItemContextMenu = (
     };
 
     const downloadDirectory = async () => {
-        const directoryZipURL = `http://localhost:8080/api/v1/download/directory${location.pathname}/${directoryName}`;
+        const directoryZipURL = `http://localhost:8080/api/v1/download/directory/${id}`;
         const { data: blobData } = await axios.get(directoryZipURL, {
             headers: {
                 Authorization: `Bearer ${token}`,
