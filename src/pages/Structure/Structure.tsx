@@ -17,7 +17,6 @@ const Structure = () => {
     const displayGeneralContextMenu = (event: MouseEvent<HTMLElement>) => {
         show({ event });
     };
-
     return (
         <div
             style={{

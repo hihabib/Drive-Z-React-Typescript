@@ -2,7 +2,6 @@ import { useContextMenu } from "react-contexify";
 import { MouseEvent } from "react";
 import axios from "axios";
 import { Auth } from "../model.ts";
-import { useLocation } from "react-router-dom";
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
 const useItemContextMenu = (
@@ -10,7 +9,6 @@ const useItemContextMenu = (
     fileName: string = "",
     directoryName: string = "",
 ) => {
-    const location = useLocation();
     const { show } = useContextMenu({
         id,
     });

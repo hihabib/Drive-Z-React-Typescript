@@ -32,7 +32,9 @@ const useGeneralContextMenu = () => {
             (async () => {
                 const { create_new_directory: newDirectoryName } = values;
                 const response = await axios.get(
-                    `http://localhost:8080/api/v1/structures/create-directory${location.pathname}/${newDirectoryName}`,
+                    `http://localhost:8080/api/v1/structures/create-directory${
+                        location.pathname === "/" ? "" : location.pathname
+                    }/${newDirectoryName}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

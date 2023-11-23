@@ -6,7 +6,7 @@ import {
 import { StructureContext } from "./StructureContext.ts";
 import { StructureActionType } from "../../constants/structure.ts";
 import { Auth } from "../../model.ts";
-import axios, { AxiosResponse, isAxiosError } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { StructureDirectory, StructureFile } from "../../@types/api";
 import { useLocation } from "react-router-dom";
 
@@ -27,6 +27,7 @@ const StructureProvider = ({ children }: StructureProviderProps) => {
     useEffect(() => {
         (async () => {
             try {
+                // Fetch directories
                 const directoryResponse: AxiosResponse<StructureDirectory[]> =
                     await axios.get(
                         `http://localhost:8080/api/v1/structures/get-directories${path}`,
@@ -55,17 +56,17 @@ const StructureProvider = ({ children }: StructureProviderProps) => {
                     payload: directories,
                 });
             } catch (error) {
-                if (isAxiosError(error) && error?.response?.status) {
-                    dispatch({
-                        type: StructureActionType.dirNotFound,
-                        payload: { isDirNotFound: true },
-                    });
+                if (axios.isAxiosError(error)) {
+                    if (error?.response?.status === 404) {
+                        dispatch({
+                            type: StructureActionType.dirNotFound,
+                            payload: { isDirNotFound: true },
+                        });
+                    }
                 }
             }
-        })();
-
-        (async () => {
             try {
+                // Fetch Files
                 const fileRequest: AxiosResponse<StructureFile[]> =
                     await axios.get(
                         `http://localhost:8080/api/v1/structures/get-files${path}`,
@@ -94,7 +95,7 @@ const StructureProvider = ({ children }: StructureProviderProps) => {
                     payload: files,
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         })();
     }, [path]);
