@@ -4,7 +4,6 @@ import useSelection from "./useSelection.ts";
 import { useNavigate } from "react-router-dom";
 
 import useRename, { UseRename } from "./useRename.ts";
-
 interface UseDirectoryParam {
     initialDirName: string;
     id: string;
