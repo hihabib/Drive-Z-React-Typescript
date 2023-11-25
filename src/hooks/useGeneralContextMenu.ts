@@ -6,6 +6,7 @@ import { Auth } from "../model.ts";
 import useStructure from "./useStructure.ts";
 import { StructureActionType } from "../constants/structure.ts";
 import { StructureDirectory } from "../@types/api";
+import { domain } from "../../server.ts";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 const useGeneralContextMenu = () => {
@@ -39,7 +40,7 @@ const useGeneralContextMenu = () => {
                 // call directory creation API
                 const { create_new_directory: newDirectoryName } = values;
                 const response = await axios.get(
-                    `http://localhost:8080/api/v1/structures/create-directory${
+                    `${domain}/api/v1/structures/create-directory${
                         location.pathname === "/" ? "" : location.pathname
                     }/${newDirectoryName}`,
                     {
@@ -54,7 +55,7 @@ const useGeneralContextMenu = () => {
                         type: StructureActionType.addDirectories,
                         payload: [
                             {
-                                id: newDirectoryName,
+                                id: response.data?.id,
                                 directoryName: newDirectoryName,
                             },
                         ] as StructureDirectory[],

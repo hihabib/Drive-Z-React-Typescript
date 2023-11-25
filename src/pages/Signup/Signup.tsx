@@ -6,45 +6,48 @@ import {
     FormControl,
     FormGroup,
 } from "react-bootstrap";
-import classes from "./Login.module.css";
-import useAuth from "../../hooks/useAuth.ts";
-import { isEmptyObj } from "../../utils/objectUtil.ts";
-import { Navigate, NavLink } from "react-router-dom";
+import classes from "./Signup.module.css";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Auth } from "../../model.ts";
-import { UserAction } from "../../constants/user.ts";
 import { domain } from "../../../server.ts";
 
-const Login = () => {
-    const { user, dispatch } = useAuth();
+const Signup = () => {
+    const navigate = useNavigate();
     const { getFieldProps, handleSubmit } = useFormik({
         initialValues: {
+            fullname: "",
             username: "",
+            email: "",
             password: "",
+            mobile: "",
+            country: "",
         },
-        onSubmit: async ({ username, password }) => {
+        onSubmit: async ({
+            fullname,
+            username,
+            email,
+            password,
+            mobile,
+            country,
+        }) => {
             try {
-                const { data: LoginResponse, status } = await axios.post(
-                    `${domain}/api/v1/auth/signin`,
+                const { status } = await axios.post(
+                    `${domain}/api/v1/auth/signup`,
                     {
-                        username,
-                        password,
+                        fullName: fullname,
+                        username: username,
+                        email: email,
+                        password: password,
+                        mobile: mobile,
+                        country: country,
                     },
                 );
-                const token: string = LoginResponse.token;
-                const user: {
-                    name: string;
-                    email: string;
-                    username: string;
-                } = LoginResponse.user;
 
-                if (200 === status) {
-                    localStorage.setItem(Auth.TOKEN, token);
-                    localStorage.setItem(Auth.USER, JSON.stringify(user));
-                    toast.success("Login Successful", {
+                if (201 === status) {
+                    toast.success("Signup Successful", {
                         position: "top-right",
                         autoClose: 2000,
                         hideProgressBar: false,
@@ -56,19 +59,10 @@ const Login = () => {
                         theme: "colored",
                     });
                     await new Promise((resolve) => setTimeout(resolve, 2000));
-                    dispatch({
-                        type: UserAction.set,
-                        payload: {
-                            username: user.username,
-                            fullName: user.name,
-                            email: user.email,
-                        },
-                    });
-                    // navigate("/")
-                    window.location.href = "/";
+                    navigate("/");
                     return;
                 } else {
-                    toast.error("Login Failed", {
+                    toast.error("Signup Failed", {
                         position: "top-right",
                         autoClose: 2000,
                         hideProgressBar: false,
@@ -80,7 +74,7 @@ const Login = () => {
                     });
                 }
             } catch (error) {
-                toast.error("Login Failed", {
+                toast.error("Signup Failed", {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -93,9 +87,6 @@ const Login = () => {
             }
         },
     });
-    if (!isEmptyObj(user)) {
-        return <Navigate to={"/"} />;
-    }
 
     return (
         <Container
@@ -103,15 +94,40 @@ const Login = () => {
                 "vh-100 d-flex justify-content-center align-items-center"
             }
         >
-            <div className={classes.loginContainer}>
+            <div className={classes.signupContainer}>
                 <ToastContainer />
                 <Form onSubmit={handleSubmit}>
-                    <FloatingLabel label={"Enter your username"}>
+                    <FloatingLabel
+                        className={"mt-3"}
+                        label={"Enter your Full name"}
+                    >
+                        <FormControl
+                            {...getFieldProps("fullname")}
+                            name={"fullname"}
+                            id={"fullname"}
+                            placeholder={"Enter your Full name"}
+                        />
+                    </FloatingLabel>
+                    <FloatingLabel
+                        className={"mt-3"}
+                        label={"Enter your username"}
+                    >
                         <FormControl
                             {...getFieldProps("username")}
                             name={"username"}
                             id={"username"}
                             placeholder={"Enter your username"}
+                        />
+                    </FloatingLabel>
+                    <FloatingLabel
+                        className={"mt-3"}
+                        label={"Enter your email address"}
+                    >
+                        <FormControl
+                            {...getFieldProps("email")}
+                            name={"email"}
+                            id={"email"}
+                            placeholder={"Enter your email address"}
                         />
                     </FloatingLabel>
                     <FloatingLabel
@@ -126,19 +142,43 @@ const Login = () => {
                             placeholder={"Enter your Password"}
                         />
                     </FloatingLabel>
+                    <FloatingLabel
+                        className={"mt-3"}
+                        label={"Enter your Mobile Number"}
+                    >
+                        <FormControl
+                            type={"text"}
+                            {...getFieldProps("mobile")}
+                            name={"mobile"}
+                            id={"mobile"}
+                            placeholder={"Enter your Mobile Number"}
+                        />
+                    </FloatingLabel>
+                    <FloatingLabel
+                        className={"mt-3"}
+                        label={"Enter your Country Name"}
+                    >
+                        <FormControl
+                            type={"text"}
+                            {...getFieldProps("country")}
+                            name={"country"}
+                            id={"country"}
+                            placeholder={"Enter your Country Name"}
+                        />
+                    </FloatingLabel>
                     <FormGroup className={"mt-3"}>
                         <Button
                             type={"submit"}
                             variant={"primary"}
                             className={"w-100 btn-lg"}
                         >
-                            Login
+                            Signup
                         </Button>
                         <NavLink
-                            to={"/signup"}
+                            to={"/signin"}
                             className={"w-100 btn mt-3 btn-danger btn-lg"}
                         >
-                            Signup
+                            Signin
                         </NavLink>
                     </FormGroup>
                 </Form>
@@ -147,4 +187,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

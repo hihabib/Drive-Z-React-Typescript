@@ -2,6 +2,7 @@ import { FormEvent, RefObject, useEffect, useRef, useState } from "react";
 import { FieldInputProps, useFormik } from "formik";
 import axios from "axios";
 import { Auth } from "../model.ts";
+import { domain } from "../../server.ts";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
@@ -64,7 +65,7 @@ const useRename = ({ initialItemName, id }: useUserParam): UseRename => {
 
             setItemName("Loading...");
             const response = await axios.post(
-                `http://localhost:8080/api/v1/options/rename/${id}`,
+                `${domain}/api/v1/options/rename/${id}`,
                 {
                     newName: values[id],
                 },

@@ -4,6 +4,7 @@ import axios from "axios";
 import { Auth } from "../model.ts";
 import useStructure from "./useStructure.ts";
 import { StructureActionType } from "../constants/structure.ts";
+import { domain } from "../../server.ts";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
@@ -20,7 +21,7 @@ const useItemContextMenu = (
     const moveToTrash = async (): Promise<void> => {
         try {
             // Call trash api
-            const moveToTrashURL = `http://localhost:8080/api/v1/options/trash/${id}`;
+            const moveToTrashURL = `${domain}/api/v1/options/trash/${id}`;
             const response = await axios.get(moveToTrashURL, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ const useItemContextMenu = (
     };
     // Donwload file
     const downloadFile = async () => {
-        const downloadURL = "http://localhost:8080/api/v1/download/file/" + id;
+        const downloadURL = `${domain}/api/v1/download/file/` + id;
         const { data: blobData } = await axios.get(downloadURL, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -65,7 +66,7 @@ const useItemContextMenu = (
 
     // Download Directory as Zip
     const downloadDirectory = async () => {
-        const directoryZipURL = `http://localhost:8080/api/v1/download/directory/${id}`;
+        const directoryZipURL = `${domain}/api/v1/download/directory/${id}`;
         const { data: blobData } = await axios.get(directoryZipURL, {
             headers: {
                 Authorization: `Bearer ${token}`,

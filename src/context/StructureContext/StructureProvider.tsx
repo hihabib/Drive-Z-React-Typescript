@@ -9,6 +9,7 @@ import { Auth } from "../../model.ts";
 import axios, { AxiosResponse } from "axios";
 import { StructureDirectory, StructureFile } from "../../@types/api";
 import { useLocation } from "react-router-dom";
+import { domain } from "../../../server.ts";
 
 interface StructureProviderProps {
     children: ReactNode;
@@ -30,7 +31,7 @@ const StructureProvider = ({ children }: StructureProviderProps) => {
                 // Fetch directories
                 const directoryResponse: AxiosResponse<StructureDirectory[]> =
                     await axios.get(
-                        `http://localhost:8080/api/v1/structures/get-directories${path}`,
+                        `${domain}/api/v1/structures/get-directories${path}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -69,7 +70,7 @@ const StructureProvider = ({ children }: StructureProviderProps) => {
                 // Fetch Files
                 const fileRequest: AxiosResponse<StructureFile[]> =
                     await axios.get(
-                        `http://localhost:8080/api/v1/structures/get-files${path}`,
+                        `${domain}/api/v1/structures/get-files${path}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
