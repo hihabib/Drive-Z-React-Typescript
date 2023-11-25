@@ -6,6 +6,7 @@ import {Auth} from "../model.ts";
 import axios from "axios";
 import {IUser} from "../@types/authContext";
 import {UserAction} from "../constants/user.ts";
+import { domain } from "../../server.ts";
 
 
 interface PrivateRouteProps {
@@ -19,7 +20,7 @@ const PrivateRoute = ({children} : PrivateRouteProps) => {
         if(token){
             (async () =>{
                 try {
-                    const {data: {user}} : {data: {user:IUser}} = await axios.get("http://localhost:8080/api/v1/user", {
+                    const {data: {user}} : {data: {user:IUser}} = await axios.get(`${domain}/api/v1/user`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
