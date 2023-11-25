@@ -19,16 +19,24 @@ const useItemContextMenu = (
     // Move to trash
     const moveToTrash = async (): Promise<void> => {
         try {
+            // Call trash api
             const moveToTrashURL = `http://localhost:8080/api/v1/options/trash/${id}`;
             const response = await axios.get(moveToTrashURL, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(id);
+
             if (response.status === 200) {
+                // remove trashed directory from state
                 dispatch({
                     type: StructureActionType.removeDirectories,
+                    payload: { ids: [id] },
+                });
+
+                // remove trashed file from state
+                dispatch({
+                    type: StructureActionType.removeFiles,
                     payload: { ids: [id] },
                 });
             }

@@ -41,6 +41,20 @@ export const structureReducer = (
                 return { ...state, directories: [...directories] };
             }
             return state;
+        case StructureActionType.removeFiles:
+            if ("ids" in action.payload && Array.isArray(action.payload.ids)) {
+                const files = [...state.files];
+                action.payload.ids.forEach((id: string) => {
+                    const index = state.files.findIndex((file) => {
+                        return file.id === id;
+                    });
+                    if (index !== -1) {
+                        files.splice(index, 1);
+                    }
+                });
+                return { ...state, files: [...files] };
+            }
+            return state;
         case StructureActionType.setDirectories:
             if (!Array.isArray(action.payload)) {
                 return state;
