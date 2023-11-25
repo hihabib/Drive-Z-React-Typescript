@@ -17,6 +17,7 @@ interface UseFile extends UseRename {
     currentItemName: string;
     extension: string;
     renameItem: () => void;
+    moveToTrash: () => Promise<void>;
 }
 
 const useFile = ({ fileName, id }: useFileParam): UseFile => {
@@ -38,10 +39,8 @@ const useFile = ({ fileName, id }: useFileParam): UseFile => {
         ref: file,
     });
     const extension = getExtension(currentItemName);
-    const { displayContextMenu, downloadFile } = useItemContextMenu(
-        id,
-        currentItemName,
-    );
+    const { displayContextMenu, downloadFile, moveToTrash } =
+        useItemContextMenu(id, currentItemName);
     return {
         downloadFile,
         file,
@@ -55,6 +54,7 @@ const useFile = ({ fileName, id }: useFileParam): UseFile => {
         currentItemName,
         extension,
         renameItem,
+        moveToTrash,
     };
 };
 

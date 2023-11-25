@@ -1,5 +1,5 @@
 import { IUser } from "../context/UserContext/AuthContext.ts";
-import { StructureDirectory, StructureFile, StructureItems } from "./api";
+import { StructureDirectory, StructureFile } from "./api";
 import { StructureActionType } from "../constants/structure.ts";
 
 export interface CurrentDirectoryId {
@@ -19,16 +19,21 @@ export type IEmptyItemsStatus =
           directories: boolean;
       };
 
-export interface isDirNotFound {
+export interface IsDirNotFound {
     isDirNotFound: boolean;
+}
+export interface ItemIdList {
+    ids: string[];
 }
 export interface StructureAction {
     type: StructureActionType;
     payload:
-        | StructureItems[]
+        | StructureDirectory[]
+        | StructureFile[]
         | IEmptyItemsStatus
-        | isDirNotFound
-        | CurrentDirectoryId;
+        | IsDirNotFound
+        | CurrentDirectoryId
+        | ItemIdList;
 }
 
 export interface IUserAction {

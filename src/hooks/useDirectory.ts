@@ -16,6 +16,7 @@ interface UseDirectory extends UseRename {
     openDirectory: () => void;
     displayContextMenu: (event: MouseEvent<HTMLElement>) => void;
     downloadDirectory: () => Promise<void>;
+    moveToTrash: () => Promise<void>;
 }
 
 const useDirectory = ({
@@ -34,12 +35,10 @@ const useDirectory = ({
         id: id,
     });
 
-    const { displayContextMenu, downloadDirectory } = useItemContextMenu(
-        id,
-        "",
-        currentItemName,
-    );
+    const { displayContextMenu, downloadDirectory, moveToTrash } =
+        useItemContextMenu(id, "", currentItemName);
     const directory = useRef<HTMLDivElement>(null);
+
     const { isSelected, selectedItemAction } = useSelection({
         type: "directory",
         ref: directory,
@@ -64,6 +63,7 @@ const useDirectory = ({
         getFieldProps,
         renameRef,
         renameItem,
+        moveToTrash,
     };
 };
 export default useDirectory;

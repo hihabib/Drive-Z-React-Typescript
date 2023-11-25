@@ -24,10 +24,12 @@ const Directory = ({ id, dirName }: DirectoryProps) => {
         downloadDirectory,
         currentItemName: currentDirName,
         renameItem: renameDirectory,
+        moveToTrash,
     } = useDirectory({
         id,
         initialDirName: dirName,
     });
+
     return (
         <>
             <ToolTipItemName
@@ -95,6 +97,7 @@ const Directory = ({ id, dirName }: DirectoryProps) => {
                 isDir={true}
                 dirName={currentDirName}
                 id={id}
+                moveToTrash={moveToTrash}
             />
         </>
     );
