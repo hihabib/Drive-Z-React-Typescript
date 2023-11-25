@@ -21,6 +21,7 @@ interface UseFile extends UseRename {
 }
 
 const useFile = ({ fileName, id }: useFileParam): UseFile => {
+    // File rename functionality
     const {
         currentItemName,
         isRenameActive,
@@ -32,13 +33,19 @@ const useFile = ({ fileName, id }: useFileParam): UseFile => {
         initialItemName: fileName,
         id: id,
     });
+
+    // File selection
     const file = useRef<HTMLDivElement>(null);
     const { isSelected, selectedItemAction } = useSelection({
         type: "file",
         id,
         ref: file,
     });
+
+    // Get file extension as separate string
     const extension = getExtension(currentItemName);
+
+    // File Context menu
     const { displayContextMenu, downloadFile, moveToTrash } =
         useItemContextMenu(id, currentItemName);
     return {

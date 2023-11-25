@@ -23,6 +23,7 @@ const useDirectory = ({
     initialDirName,
     id,
 }: UseDirectoryParam): UseDirectory => {
+    // Rename functionality of directory
     const {
         currentItemName,
         isRenameActive,
@@ -35,16 +36,19 @@ const useDirectory = ({
         id: id,
     });
 
+    // Directory Context Menu
     const { displayContextMenu, downloadDirectory, moveToTrash } =
         useItemContextMenu(id, "", currentItemName);
-    const directory = useRef<HTMLDivElement>(null);
 
+    // directory selection
+    const directory = useRef<HTMLDivElement>(null);
     const { isSelected, selectedItemAction } = useSelection({
         type: "directory",
         ref: directory,
         id,
     });
 
+    // Directory opening function
     const navigate = useNavigate();
     const openDirectory = () => {
         navigate(currentItemName, { relative: "path" });
