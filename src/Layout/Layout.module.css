@@ -1,22 +1,27 @@
 .topSearch input {
     background-color: rgb(237, 242, 252);
 }
-.topSearch label{
-    padding-left: 1.5rem!important;
+
+.topSearch label {
+    padding-left: 1.5rem !important;
 }
+
 .logo {
     font-size: 24px
 }
+
 .options {
     font-size: 25px;
 }
+
 .sidebar, .headerLeft {
     width: 20%;
 }
+
 .headerRight {
     width: 80%
 }
+
 .mainContent {
     background-color: #fff;
-    width: 80%;
 }
