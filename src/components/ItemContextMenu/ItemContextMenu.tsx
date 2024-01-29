@@ -22,6 +22,7 @@ type ItemContextMenuProps =
       downloadFunc: () => void;
       renameFunc?: () => void;
       deleteItem: () => Promise<void>;
+      copyLink: () => Promise<void>;
     }
   | {
       id: string;
@@ -30,6 +31,7 @@ type ItemContextMenuProps =
       downloadFunc: () => void;
       renameFunc?: () => void;
       deleteItem: () => Promise<void>;
+      copyLink: () => Promise<void>;
     };
 
 const ItemContextMenu = ({
@@ -39,6 +41,7 @@ const ItemContextMenu = ({
   downloadFunc,
   renameFunc,
   deleteItem,
+  copyLink,
 }: ItemContextMenuProps) => {
   return (
     <>
@@ -78,7 +81,7 @@ const ItemContextMenu = ({
               <div>Share</div>
             </Stack>
           </Item>
-          <Item onClick={() => console.log("Working Context menu")}>
+          <Item onClick={copyLink}>
             <Stack direction={"horizontal"} gap={3}>
               <div style={{ fontSize: "20px" }}>
                 <BiLinkAlt />

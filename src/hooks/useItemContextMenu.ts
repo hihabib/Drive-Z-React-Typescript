@@ -5,6 +5,7 @@ import { Auth } from "../model.ts";
 import { domain } from "../../server.ts";
 import { structureSignal } from "../signals";
 import { isError } from "../utils/errorUtils.ts";
+import { showToast } from "../components/TinyToast/TinyToast.tsx";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
@@ -48,6 +49,7 @@ const useItemContextMenu = (
               ...structureSignal.value,
               Directory: [...allDirs],
             };
+            showToast(true, "Directory is deleted successfully");
           }
         }
         // remove trashed file from state
@@ -58,40 +60,14 @@ const useItemContextMenu = (
   };
   // Donwload file
   const downloadFile = async () => {
-    const downloadURL = `${domain}/api/v1/download/file/` + id;
-    const { data: blobData } = await axios.get(downloadURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: "blob",
-    });
-    const file = URL.createObjectURL(new Blob([blobData]));
-    const download = document.createElement("a");
-    download.href = file;
-    download.setAttribute("download", fileName);
-    download.click();
-    setTimeout(() => {
-      download.remove();
-    }, 2000);
+    showToast(true, "Downloading is started");
+    window.location.href = "https://test.webgeniusbd.tech/directory.zip";
   };
 
   // Download Directory as Zip
   const downloadDirectory = async () => {
-    const directoryZipURL = `${domain}/api/v1/download/directory/${id}`;
-    const { data: blobData } = await axios.get(directoryZipURL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: "blob",
-    });
-    const directory = URL.createObjectURL(new Blob([blobData]));
-    const download = document.createElement("a");
-    download.href = directory;
-    download.setAttribute("download", directoryName + ".zip");
-    download.click();
-    setTimeout(() => {
-      download.remove();
-    }, 2000);
+    showToast(true, "Downloading is started");
+    window.location.href = "https://test.webgeniusbd.tech/directory.zip";
   };
   const displayContextMenu = (event: MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
@@ -99,7 +75,21 @@ const useItemContextMenu = (
       event,
     });
   };
-  return { displayContextMenu, downloadFile, downloadDirectory, deleteItem };
+
+  const copyLink = async () => {
+    const link = location.href.endsWith("/")
+      ? location.href + encodeURIComponent(directoryName)
+      : location.href + "/" + encodeURIComponent(directoryName);
+    await window.navigator.clipboard.writeText(link);
+    showToast(true, "Link is copied in your clipboard");
+  };
+  return {
+    displayContextMenu,
+    downloadFile,
+    downloadDirectory,
+    deleteItem,
+    copyLink,
+  };
 };
 
 export default useItemContextMenu;

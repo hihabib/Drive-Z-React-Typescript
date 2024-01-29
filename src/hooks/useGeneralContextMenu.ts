@@ -5,9 +5,12 @@ import { Auth } from "../model.ts";
 import { domain } from "../../server.ts";
 import { structureSignal } from "../signals";
 import { isError } from "../utils/errorUtils.ts";
+import { showToast } from "../components/TinyToast/TinyToast.tsx";
+import { useLocation } from "react-router-dom";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 const useGeneralContextMenu = () => {
+  const location = useLocation();
   // New Directory Modal state
   const [isCreateDirectoryModalVisible, setIsCreateDirectoryModalVisible] =
     useState(false);
@@ -35,7 +38,7 @@ const useGeneralContextMenu = () => {
         // call directory creation API
         const { create_new_directory: newDirectoryName } = values;
         const response = await axios.get(
-          `${domain}/api/v1/tree/createDirectory/${newDirectoryName}`,
+          `${domain}/api/v1/tree/createDirectory${location.pathname}/${newDirectoryName}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,6 +55,7 @@ const useGeneralContextMenu = () => {
               ...structureSignal.value,
               Directory: [...structureSignal.value.Directory, response.data],
             };
+            showToast(true, "Directory is created successfully");
           }
         }
       })()

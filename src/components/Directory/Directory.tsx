@@ -25,6 +25,7 @@ const Directory = ({ id, dirName }: DirectoryProps) => {
     currentItemName: currentDirName,
     renameItem: renameDirectory,
     deleteItem,
+    copyLink,
   } = useDirectory({
     id,
     initialDirName: dirName,
@@ -84,6 +85,7 @@ const Directory = ({ id, dirName }: DirectoryProps) => {
         </div>
       </ToolTipItemName>
       <ItemContextMenu
+        copyLink={copyLink}
         renameFunc={renameDirectory}
         downloadFunc={downloadDirectory}
         isDir={true}
