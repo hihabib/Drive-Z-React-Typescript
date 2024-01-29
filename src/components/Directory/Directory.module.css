@@ -8,6 +8,7 @@
     cursor: pointer;
     user-select: none;
     width: 100%;
+    background-color: rgb(242, 246, 252);
 }
 
 .directory:hover {
@@ -34,4 +35,8 @@
 
 .directoryNameWithIcon {
     width: calc(100% - 47px);
+}
+
+.selected, .selected:hover {
+    background-color: rgb(194, 231, 255) !important;
 }

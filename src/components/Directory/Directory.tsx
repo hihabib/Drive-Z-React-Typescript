@@ -35,15 +35,12 @@ const Directory = ({ id, dirName }: DirectoryProps) => {
       <ToolTipItemName id={`tooltip-${id}`} directoryName={currentDirName}>
         <div
           ref={directory}
-          style={{
-            backgroundColor: isSelected()
-              ? "rgb(194, 231, 255)"
-              : "rgb(242, 246, 252)",
-          }}
           onClick={() => selectedItemAction("ADD")}
           onDoubleClick={openDirectory}
           onContextMenu={displayContextMenu}
-          className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${classes.directory}`}
+          className={`d-inline-flex gap-3 rounded-4 align-items-center justify-content-between ${
+            classes.directory
+          } ${isSelected() ? classes.selected : ""}`}
         >
           <div
             className={`d-inline-flex gap-3 rounded-4 align-items-center ${classes.directoryNameWithIcon}`}

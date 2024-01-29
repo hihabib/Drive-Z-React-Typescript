@@ -3,6 +3,8 @@ import { MouseEvent } from "react";
 import axios from "axios";
 import { Auth } from "../model.ts";
 import { domain } from "../../server.ts";
+import { structureSignal } from "../signals";
+import { isError } from "../utils/errorUtils.ts";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
@@ -18,7 +20,9 @@ const useItemContextMenu = (
   const deleteItem = async (): Promise<void> => {
     try {
       // Call trash api
-      const deleteItemURL = `${domain}/api/v1/options/trash/${id}`;
+      const deleteItemURL = `${domain}/api/v1/tree/deleteDirectory/${
+        id.split("dir-")[1]
+      }`;
       const response = await axios.get(deleteItemURL, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -27,6 +31,25 @@ const useItemContextMenu = (
 
       if (response.status === 200) {
         // remove trashed directory from state
+        if (id.startsWith("dir-")) {
+          if (
+            structureSignal.value !== null &&
+            !isError(structureSignal.value)
+          ) {
+            // find the index of deleted directory in structureSignal
+            const index = structureSignal.value.Directory.findIndex(
+              (dir) => dir.id === Number(id.split("dir-")[1]),
+            );
+            // creating a clone of all directory and delete the targeted directory from the signal
+            const allDirs = [...structureSignal.value.Directory];
+            allDirs.splice(index, 1);
+            // set the new directory list to structure signal
+            structureSignal.value = {
+              ...structureSignal.value,
+              Directory: [...allDirs],
+            };
+          }
+        }
         // remove trashed file from state
       }
     } catch (error) {
