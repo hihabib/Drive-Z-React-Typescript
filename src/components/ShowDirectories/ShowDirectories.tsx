@@ -1,12 +1,13 @@
 import SectionTitle from "../SectionTitle/SectionTitle.tsx";
 import { Col, Row } from "react-bootstrap";
 import Directory from "../Directory/Directory.tsx";
-import { StructureDirectory } from "../../@types/api";
+
 import { memo } from "react";
+import { TDirectory } from "../../types/structure.ts";
 
 interface ShowDirectoriesProps {
     isEmptyDirectory: boolean;
-    directories: StructureDirectory[];
+    directories: TDirectory[];
 }
 
 const ShowDirectories = memo(
@@ -21,8 +22,8 @@ const ShowDirectories = memo(
                                 directories.map((directory) => (
                                     <Col key={directory.id}>
                                         <Directory
-                                            id={directory.id}
-                                            dirName={directory.directoryName}
+                                            id={`dir-${directory.id}`}
+                                            dirName={directory.name}
                                         />
                                     </Col>
                                 ))}

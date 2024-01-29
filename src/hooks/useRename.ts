@@ -1,8 +1,8 @@
-import { FormEvent, RefObject, useEffect, useRef, useState } from "react";
-import { FieldInputProps, useFormik } from "formik";
+import {FormEvent, RefObject, useEffect, useRef, useState} from "react";
+import {FieldInputProps, useFormik} from "formik";
 import axios from "axios";
-import { Auth } from "../model.ts";
-import { domain } from "../../server.ts";
+import {Auth} from "../model.ts";
+import {domain} from "../../server.ts";
 
 const token = localStorage.getItem(Auth.TOKEN) as string;
 
@@ -10,6 +10,7 @@ interface useUserParam {
     initialItemName: string;
     id: string;
 }
+
 export interface UseRename {
     currentItemName: string;
     isRenameActive: boolean;
@@ -18,7 +19,8 @@ export interface UseRename {
     renameRef: RefObject<HTMLInputElement>;
     renameItem: () => void;
 }
-const useRename = ({ initialItemName, id }: useUserParam): UseRename => {
+
+const useRename = ({initialItemName, id}: useUserParam): UseRename => {
     const [currentItemName, setItemName] = useState(initialItemName);
     const [isRenameActive, setIsRenameActive] = useState(false);
     const renameRef = useRef<HTMLInputElement>(null);
@@ -56,7 +58,7 @@ const useRename = ({ initialItemName, id }: useUserParam): UseRename => {
             };
         }
     }, [isRenameActive]);
-    const { handleSubmit, getFieldProps } = useFormik({
+    const {handleSubmit, getFieldProps} = useFormik({
         initialValues: {
             [id]: currentItemName,
         },

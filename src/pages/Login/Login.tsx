@@ -1,45 +1,33 @@
-import {
-    Button,
-    Container,
-    FloatingLabel,
-    Form,
-    FormControl,
-    FormGroup,
-} from "react-bootstrap";
+import {Button, Container, FloatingLabel, Form, FormControl, FormGroup,} from "react-bootstrap";
 import classes from "./Login.module.css";
-import useAuth from "../../hooks/useAuth.ts";
-import { isEmptyObj } from "../../utils/objectUtil.ts";
-import { Navigate, NavLink } from "react-router-dom";
-import { useFormik } from "formik";
+import {Navigate, NavLink} from "react-router-dom";
+import {useFormik} from "formik";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Auth } from "../../model.ts";
-import { UserAction } from "../../constants/user.ts";
-import { domain } from "../../../server.ts";
+import {Auth} from "../../model.ts";
+import {domain} from "../../../server.ts";
+import {userSignal} from "../../signals";
+import {TUser} from "../../types/user.ts";
 
 const Login = () => {
-    const { user, dispatch } = useAuth();
-    const { getFieldProps, handleSubmit } = useFormik({
+
+    const {getFieldProps, handleSubmit} = useFormik({
         initialValues: {
             username: "",
             password: "",
         },
-        onSubmit: async ({ username, password }) => {
+        onSubmit: async ({username, password}) => {
             try {
-                const { data: LoginResponse, status } = await axios.post(
-                    `${domain}/api/v1/auth/signin`,
+                const {data: LoginResponse, status} = await axios.post(
+                    `${domain}/api/v1/user/login`,
                     {
                         username,
                         password,
                     },
                 );
                 const token: string = LoginResponse.token;
-                const user: {
-                    name: string;
-                    email: string;
-                    username: string;
-                } = LoginResponse.user;
+                const user = LoginResponse.user as TUser;
 
                 if (200 === status) {
                     localStorage.setItem(Auth.TOKEN, token);
@@ -56,14 +44,8 @@ const Login = () => {
                         theme: "colored",
                     });
                     await new Promise((resolve) => setTimeout(resolve, 2000));
-                    dispatch({
-                        type: UserAction.set,
-                        payload: {
-                            username: user.username,
-                            fullName: user.name,
-                            email: user.email,
-                        },
-                    });
+                    // save user here
+                    userSignal.value = user;
                     // navigate("/")
                     window.location.href = "/";
                     return;
@@ -93,8 +75,8 @@ const Login = () => {
             }
         },
     });
-    if (!isEmptyObj(user)) {
-        return <Navigate to={"/"} />;
+    if (userSignal.value !== null) {
+        return <Navigate to={"/"}/>;
     }
 
     return (
@@ -104,7 +86,7 @@ const Login = () => {
             }
         >
             <div className={classes.loginContainer}>
-                <ToastContainer />
+                <ToastContainer/>
                 <Form onSubmit={handleSubmit}>
                     <FloatingLabel label={"Enter your username"}>
                         <FormControl
@@ -136,9 +118,9 @@ const Login = () => {
                         </Button>
                         <NavLink
                             to={"/signup"}
-                            className={"w-100 btn mt-3 btn-danger btn-lg"}
+                            className={"w-100 btn btn-link mt-3 "}
                         >
-                            Signup
+                            Create new account
                         </NavLink>
                     </FormGroup>
                 </Form>

@@ -1,2 +1,4 @@
-export const domain = "https://drive-z-server.onrender.com";
-// export const domain = "http://localhost:8080";
+// export const domain = "https://zdrive.webgeniusbd.tech";
+export const domain = "http://localhost:8080";
+
+

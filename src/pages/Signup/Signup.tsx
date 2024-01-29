@@ -22,27 +22,21 @@ const Signup = () => {
             username: "",
             email: "",
             password: "",
-            mobile: "",
-            country: "",
         },
         onSubmit: async ({
             fullname,
             username,
             email,
             password,
-            mobile,
-            country,
         }) => {
             try {
                 const { status } = await axios.post(
-                    `${domain}/api/v1/auth/signup`,
+                    `${domain}/api/v1/user/registration`,
                     {
-                        fullName: fullname,
-                        username: username,
-                        email: email,
-                        password: password,
-                        mobile: mobile,
-                        country: country,
+                        "username": username,
+                        "name": fullname,
+                        "password": password,
+                        "email": email
                     },
                 );
 
@@ -142,30 +136,7 @@ const Signup = () => {
                             placeholder={"Enter your Password"}
                         />
                     </FloatingLabel>
-                    <FloatingLabel
-                        className={"mt-3"}
-                        label={"Enter your Mobile Number"}
-                    >
-                        <FormControl
-                            type={"text"}
-                            {...getFieldProps("mobile")}
-                            name={"mobile"}
-                            id={"mobile"}
-                            placeholder={"Enter your Mobile Number"}
-                        />
-                    </FloatingLabel>
-                    <FloatingLabel
-                        className={"mt-3"}
-                        label={"Enter your Country Name"}
-                    >
-                        <FormControl
-                            type={"text"}
-                            {...getFieldProps("country")}
-                            name={"country"}
-                            id={"country"}
-                            placeholder={"Enter your Country Name"}
-                        />
-                    </FloatingLabel>
+
                     <FormGroup className={"mt-3"}>
                         <Button
                             type={"submit"}
@@ -176,9 +147,9 @@ const Signup = () => {
                         </Button>
                         <NavLink
                             to={"/signin"}
-                            className={"w-100 btn mt-3 btn-danger btn-lg"}
+                            className={"w-100 btn btn-link mt-3 "}
                         >
-                            Signin
+                            Already have an account? Sign in now
                         </NavLink>
                     </FormGroup>
                 </Form>

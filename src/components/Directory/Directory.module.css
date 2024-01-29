@@ -1,6 +1,7 @@
 .dots {
     width: 20px;
 }
+
 .directory {
     font-size: 28px;
     padding: 10px 15px;
@@ -8,24 +9,29 @@
     user-select: none;
     width: 100%;
 }
+
 .directory:hover {
-    background-color: rgb(220, 227, 237);
+    background-color: #DFE3E7 !important;
 }
-.directoryName{
+
+.directoryName {
     font-size: 14px;
     font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .moreIcon {
     font-size: 20px;
     height: 30px;
     width: 30px;
 }
+
 .moreIcon:hover {
     background-color: rgb(205, 212, 226);
 }
+
 .directoryNameWithIcon {
     width: calc(100% - 47px);
 }

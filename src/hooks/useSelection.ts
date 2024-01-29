@@ -1,5 +1,5 @@
 import {RefObject, useCallback, useEffect, useState} from "react";
-import {SelectedItems} from "../@types/selection";
+import {SelectedItems} from "../types/selection";
 
 interface useSelectionParams {
     type: 'file' | 'directory',
