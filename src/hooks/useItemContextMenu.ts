@@ -75,12 +75,14 @@ const useItemContextMenu = (
       event,
     });
   };
-
+  const linkToBeCopied = location.href.endsWith("/")
+    ? location.href +
+      encodeURIComponent(id.startsWith("dir-") ? directoryName : fileName)
+    : location.href +
+      "/" +
+      encodeURIComponent(id.startsWith("dir-") ? directoryName : fileName);
   const copyLink = async () => {
-    const link = location.href.endsWith("/")
-      ? location.href + encodeURIComponent(directoryName)
-      : location.href + "/" + encodeURIComponent(directoryName);
-    await window.navigator.clipboard.writeText(link);
+    await window.navigator.clipboard.writeText(linkToBeCopied);
     showToast(true, "Link is copied in your clipboard");
   };
   return {
@@ -89,6 +91,7 @@ const useItemContextMenu = (
     downloadDirectory,
     deleteItem,
     copyLink,
+    linkToBeCopied,
   };
 };
 

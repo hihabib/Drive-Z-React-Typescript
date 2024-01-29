@@ -24,6 +24,8 @@ const File = ({ id, fileName }: FileProps) => {
     extension,
     renameItem,
     deleteItem,
+    copyLink,
+    linkToBeCopied,
   } = useFile({
     fileName: fileName,
     id: id,
@@ -83,6 +85,8 @@ const File = ({ id, fileName }: FileProps) => {
         </div>
       </div>
       <ItemContextMenu
+        linkToBeCopied={linkToBeCopied}
+        copyLink={copyLink}
         deleteItem={deleteItem}
         renameFunc={renameItem}
         downloadFunc={downloadFile}

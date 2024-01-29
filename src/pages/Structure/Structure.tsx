@@ -11,6 +11,7 @@ import { isEmptyObj } from "../../utils/objectUtils.ts";
 import { effect } from "@preact/signals-react";
 import { Spinner } from "react-bootstrap";
 import TinyToast from "../../components/TinyToast/TinyToast.tsx";
+import ShareWith from "../../components/ShareWith/ShareWith.tsx";
 
 const Structure = () => {
   const [structure, setStructure] = useState(structureSignal.value);
@@ -71,6 +72,7 @@ const Structure = () => {
         )}
       </div>
       <TinyToast />
+      <ShareWith />
     </>
   );
 };

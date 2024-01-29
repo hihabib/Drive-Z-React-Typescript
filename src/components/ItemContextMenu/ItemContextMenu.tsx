@@ -13,6 +13,7 @@ import {
   BiTrash,
   BiUserPlus,
 } from "react-icons/bi";
+import { showModal } from "../ShareWith/ShareWith.tsx";
 
 type ItemContextMenuProps =
   | {
@@ -23,6 +24,7 @@ type ItemContextMenuProps =
       renameFunc?: () => void;
       deleteItem: () => Promise<void>;
       copyLink: () => Promise<void>;
+      linkToBeCopied: string;
     }
   | {
       id: string;
@@ -32,6 +34,7 @@ type ItemContextMenuProps =
       renameFunc?: () => void;
       deleteItem: () => Promise<void>;
       copyLink: () => Promise<void>;
+      linkToBeCopied: string;
     };
 
 const ItemContextMenu = ({
@@ -42,6 +45,7 @@ const ItemContextMenu = ({
   renameFunc,
   deleteItem,
   copyLink,
+  linkToBeCopied,
 }: ItemContextMenuProps) => {
   return (
     <>
@@ -73,12 +77,16 @@ const ItemContextMenu = ({
             </Stack>
           }
         >
-          <Item onClick={() => console.log("Working Context menu")}>
+          <Item
+            onClick={() => {
+              showModal(true, linkToBeCopied);
+            }}
+          >
             <Stack direction={"horizontal"} gap={3}>
               <div style={{ fontSize: "20px" }}>
                 <BiUserPlus />
               </div>
-              <div>Share</div>
+              <div>Share with people</div>
             </Stack>
           </Item>
           <Item onClick={copyLink}>
